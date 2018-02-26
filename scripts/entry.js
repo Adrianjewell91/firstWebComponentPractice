@@ -1,5 +1,10 @@
 document.addEventListener("DOMContentLoaded", function(e) {
   console.log(e);
+  buildElement();
+
+});
+
+function buildElement() {
 
   const HelloWorld = document.registerElement('hello-world');
 
@@ -10,4 +15,4 @@ document.addEventListener("DOMContentLoaded", function(e) {
 
   document.body.appendChild(hello);
 
-});
+}
