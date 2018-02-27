@@ -17,9 +17,11 @@ async function buildElement() {
   const HelloWorld = document.registerElement('hello-world');
 
   var hello = new HelloWorld();
+
   var data = await getData();
   var results = data.results[0].login.username;
-  // debugger;
+
+
   const helloShadow = hello.attachShadow({mode: "open"});
   helloShadow.innerHTML = "<h1>This is a random user that from random users API:</h1>";
   helloShadow.innerHTML += `<h1>${results}</h1>`;
