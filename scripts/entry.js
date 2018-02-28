@@ -1,33 +1,20 @@
-document.addEventListener("DOMContentLoaded", function(e) {
+import { getUsernameData } from './getUsernameData';
+import { buildHelloElement } from './helloWorldElement';
+import GetAirportWeather from './getWeatherElement';
+
+/** When the DOM Content is loaded, initialize the program and load the data.*/
+
+document.addEventListener("DOMContentLoaded", async function(e) {
+
   console.log(e);
-  buildElement();
+
+  customElements.define('airport-weather', GetAirportWeather);
+  console.log(GetAirportWeather);
+
+  const data = await getUsernameData();
+  buildHelloElement(data.results[0].login.username);
+
+  let getAirportWeather = document.createElement('airport-weather');
+  document.body.appendChild(getAirportWeather);
 
 });
-
-
-function getData() {
-  let data = fetch('https://randomuser.me/api/').then((r) => r.json())
-                                                      .then((r) => r);
-  // debugger;
-  return data;
-}
-
-async function buildElement() {
-
-  const HelloWorld = document.registerElement('hello-world');
-
-  var hello = new HelloWorld();
-
-  var data = await getData();
-  var results = data.results[0].login.username;
-
-
-  const helloShadow = hello.attachShadow({mode: "open"});
-  helloShadow.innerHTML = "<h1>This is a random user that from random users API:</h1>";
-  helloShadow.innerHTML += `<h1>${results}</h1>`;
-
-  document.body.appendChild(hello);
-}
-
-
-//Make a XhR request with async await
