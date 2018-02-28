@@ -22,11 +22,9 @@ class GetAirportWeather extends HTMLElement {
   }
 
   connectedCallback() {
-
   }
 
   getWeather(search) {
-
     /** Make a request here for weather information, or other things. */
     let a = fetch("https://api.openweathermap.org/data/2.5/weather?" +
                    `q=${search}&APPID=9e10e62732b3e1db6c5e879a13208af7`);
@@ -38,18 +36,24 @@ class GetAirportWeather extends HTMLElement {
           @this.shadowRoot came into existance at line 5: #this.attachShadow */
       var info = this.shadowRoot.getElementById('info');
       if (info) { info.remove() }
-      console.log(r);
-
       info = document.createElement("h");
-      info.innerHTML = `
-          <h id='info'>${search}: ${r.weather[0].description}.</h>
+
+      if (r.cod && r.cod[0] === "4") {
+        info.innerHTML = `
+        <h id='info'>Error couldn't find city. Please try again.</h>
         `;
+      } else {
+        info.innerHTML = `
+        <h id='info'>${search}: ${r.weather[0].description}.</h>
+        `;
+      }
+
+      /** Use #appendChild in order to persist the event listener.
+          If you simply concat the InnerHTML, the EventListener will
+          disappear for some reason. */
       this.shadowRoot.appendChild(info);
     });
   }
-
 }
-
-//Why can I only call this thing once?
 
 export default GetAirportWeather;
