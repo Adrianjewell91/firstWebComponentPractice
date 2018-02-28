@@ -4,6 +4,7 @@ class GetAirportWeather extends HTMLElement {
   constructor() {
     super();
 
+    /** Adds the shadow root */
     const shadowRoot = this.attachShadow({mode: "open"});
     shadowRoot.innerHTML = `
       <h1>Type a City name to get the weather:</h1>
@@ -11,6 +12,7 @@ class GetAirportWeather extends HTMLElement {
       <button id="submit">Submit</button>
     `;
 
+    /** Adds the event listener, gets the weather on click */
     shadowRoot.getElementById("submit").addEventListener("click", function(e) {
       e.preventDefault();
       var city = shadowRoot.getElementById('input');
@@ -34,10 +36,15 @@ class GetAirportWeather extends HTMLElement {
       /** Change the innerhtml
           Put this into the inner html
           @this.shadowRoot came into existance at line 5: #this.attachShadow */
+      var info = this.shadowRoot.getElementById('info');
+      if (info) { info.remove() }
+      console.log(r);
 
-      this.shadowRoot.innerHTML += `
-          <h>${search}: ${r.weather[0].description}.</h>
+      info = document.createElement("h");
+      info.innerHTML = `
+          <h id='info'>${search}: ${r.weather[0].description}.</h>
         `;
+      this.shadowRoot.appendChild(info);
     });
   }
 
