@@ -5,13 +5,16 @@ class GetAirportWeather extends HTMLElement {
     const shadowRoot = this.attachShadow({mode: "open"});
     shadowRoot.innerHTML = `
       <h1>Type a City name to get the weather:</h1>
-      <input type="text" placeholder="type code here"></input>
+      <input id="input" type="text" placeholder="type code here"></input>
       <button id="submit">Submit</button>
     `;
 
     shadowRoot.getElementById("submit").addEventListener("click", function(e) {
       e.preventDefault();
-      shadowRoot.host.getWeather("London");
+      var city = shadowRoot.getElementById('input');
+      shadowRoot.host.getWeather(city.value);
+      city.value = "";
+
     });
 
   }
