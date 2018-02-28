@@ -4,14 +4,14 @@ class GetAirportWeather extends HTMLElement {
 
     const shadowRoot = this.attachShadow({mode: "open"});
     shadowRoot.innerHTML = `
-      <h1>Type the Airport Code to get the weather:</h1>
+      <h1>Type a City name to get the weather:</h1>
       <input type="text" placeholder="type code here"></input>
       <button id="submit">Submit</button>
     `;
 
     shadowRoot.getElementById("submit").addEventListener("click", function(e) {
       e.preventDefault();
-      shadowRoot.host.getWeather();
+      shadowRoot.host.getWeather("London");
     });
 
   }
@@ -19,8 +19,15 @@ class GetAirportWeather extends HTMLElement {
   connectedCallback() {
   }
 
-  getWeather(apiKey, username) {
-    console.log("Should get weather and change the inner HTML");
+  async getWeather(search) {
+    //I want to make a request here for weather information, or other things.
+    let a = fetch("https://api.openweathermap.org/data/2.5/weather?" +
+                   `q=${search}&APPID=9e10e62732b3e1db6c5e879a13208af7`);
+    let b;
+    await a.then((r) => r.json()).then((r) => b = r);
+    // Change the innerhtml
+    // console.log(shadowRoot);
+    console.log(b);
   }
 }
 
