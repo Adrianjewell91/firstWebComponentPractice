@@ -1,3 +1,5 @@
+/** This is an ES6 weather widget */
+
 class GetAirportWeather extends HTMLElement {
   constructor() {
     super();
@@ -27,9 +29,12 @@ class GetAirportWeather extends HTMLElement {
     let a = fetch("https://api.openweathermap.org/data/2.5/weather?" +
                    `q=${search}&APPID=9e10e62732b3e1db6c5e879a13208af7`);
     let b;
+
     a.then((r) => r.json()).then((r) => {
       /** Change the innerhtml
-          Put this into the inner html */
+          Put this into the inner html
+          @this.shadowRoot came into existance at line 5: #this.attachShadow */
+
       this.shadowRoot.innerHTML += `
           <h>${search}: ${r.weather[0].description}.</h>
         `;
@@ -38,6 +43,6 @@ class GetAirportWeather extends HTMLElement {
 
 }
 
-//Why can I only do it once? 
+//Why can I only call this thing once?
 
 export default GetAirportWeather;
