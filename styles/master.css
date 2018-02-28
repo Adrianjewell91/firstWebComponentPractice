@@ -1,5 +1,27 @@
+/*  Be modular with your classes. */
+
+
+
 .flex-and-column {
   display: flex;
   flex-direction: column;
-  align-items: center;
+}
+
+.header {
+  text-align: center;
+}
+
+body {
+  align-items: normal;
+  background: ghostwhite;
+}
+
+airport-weather {
+  align-items: normal;
+  background: blue;
+  box-shadow: 6px 6px 4px 1px rgba(0, 0, 255, .2);
+  /* color: white; */
+  margin: 4%;
+  border: 1px solid blue;
+  border-radius: 10px;
 }

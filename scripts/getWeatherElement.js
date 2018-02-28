@@ -7,7 +7,17 @@ class GetAirportWeather extends HTMLElement {
     /** Adds the shadow root */
     const shadowRoot = this.attachShadow({mode: "open"});
     shadowRoot.innerHTML = `
-      <h1>Type a City name to get the weather:</h1>
+      <style>
+        * {
+          margin: 4%;
+        }
+
+        h1 {
+          color: white;
+        }
+
+      </style>
+      <h1 id="instructions">Type a City name to get the weather:</h1>
       <input id="input" type="text" placeholder="type code here"></input>
       <button id="submit">Submit</button>
     `;
@@ -36,21 +46,22 @@ class GetAirportWeather extends HTMLElement {
           @this.shadowRoot came into existance at line 5: #this.attachShadow */
       var info = this.shadowRoot.getElementById('info');
       if (info) { info.remove() }
-      info = document.createElement("h");
-
+      info = document.createElement("h1");
+      info.id = 'info';
       if (r.cod && r.cod[0] === "4") {
-        info.innerHTML = `
-        <h id='info'>Error couldn't find city. Please try again.</h>
+        info.textContent = `
+          Error couldn't find city. Please try again.
         `;
       } else {
-        info.innerHTML = `
-        <h id='info'>${search}: ${r.weather[0].description}.</h>
+        info.textContent = `
+          ${r.name},${r.sys.country}: ${r.weather[0].description}.
         `;
       }
 
       /** Use #appendChild in order to persist the event listener.
           If you simply concat the InnerHTML, the EventListener will
           disappear for some reason. */
+      console.log(r);
       this.shadowRoot.appendChild(info);
     });
   }
