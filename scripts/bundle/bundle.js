@@ -354,22 +354,38 @@ class OverHeadCompartment extends HTMLElement {
           height: 50px;
           display: block;
         }
+
+        .occupied {
+          background: gray;
+        }
       </style>
       <div id="bin">
 
       </div>
     `;
 
+    /** Add bins
 
-      this._numberofSpaces = 3;
+    */
 
-      for (let i = 0; i < this._numberofSpaces; i++) {
-        let space = document.createElement("div");
-        space.classList.add("space")
-        space.id = `space`;
-        shadowRoot.querySelector("#bin").appendChild(space);
-      }
+    this._numberofSpaces = 3;
+    this._boundOnCompartmentClick = this._changeColor.bind(this);
+
+    for (let i = 0; i < this._numberofSpaces; i++) {
+      let space = document.createElement("div");
+      space.classList.add("space")
+      space.id = `space`;
+      space.addEventListener("click", this._boundOnCompartmentClick);
+      shadowRoot.querySelector("#bin").appendChild(space);
+    }
+
   }
+
+  _changeColor(e) {
+  
+    e.target.classList.toggle("occupied");
+  }
+
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (OverHeadCompartment);
