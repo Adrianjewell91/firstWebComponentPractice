@@ -72,6 +72,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getWeatherElement__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__airplaneSeat__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__airplaneGrid__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__overHeadCompartment__ = __webpack_require__(4);
 
 
 
@@ -85,6 +86,7 @@ document.addEventListener("DOMContentLoaded", async function(e) {
   customElements.define('airport-weather', __WEBPACK_IMPORTED_MODULE_0__getWeatherElement__["a" /* default */]);
   customElements.define('airplane-seat', __WEBPACK_IMPORTED_MODULE_1__airplaneSeat__["a" /* default */]);
   customElements.define('airplane-grid', __WEBPACK_IMPORTED_MODULE_2__airplaneGrid__["a" /* default */]);
+  customElements.define('overhead-compartment', __WEBPACK_IMPORTED_MODULE_3__overHeadCompartment__["a" /* default */]);
 
   // 2: Build the getWeather API
   let getAirportWeather = document.createElement('airport-weather');
@@ -112,6 +114,9 @@ document.addEventListener("DOMContentLoaded", async function(e) {
     */
 
 
+    //4: Overhead Test
+    let o = document.createElement("overhead-compartment");
+    document.body.appendChild(o);
 });
 
 
@@ -320,6 +325,54 @@ class AirplaneGrid extends HTMLElement {
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (AirplaneGrid);
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class OverHeadCompartment extends HTMLElement {
+  constructor() {
+    super();
+
+    const shadowRoot = this.attachShadow({mode: "open"});
+
+    shadowRoot.innerHTML = `
+      <style>
+        #bin {
+          border: 1px solid black;
+          width: fit-content;
+          height: 100%;
+        }
+
+        #space {
+          border: 1px solid black;
+          border-radius: 50%;
+          margin: 5px;
+          width: 50px;
+          height: 50px;
+          display: block;
+        }
+      </style>
+      <div id="bin">
+
+      </div>
+    `;
+
+
+      this._numberofSpaces = 3;
+
+      for (let i = 0; i < this._numberofSpaces; i++) {
+        let space = document.createElement("div");
+        space.classList.add("space")
+        space.id = `space`;
+        shadowRoot.querySelector("#bin").appendChild(space);
+      }
+  }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (OverHeadCompartment);
 
 
 /***/ })

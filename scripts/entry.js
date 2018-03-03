@@ -1,7 +1,7 @@
 import GetAirportWeather from './getWeatherElement';
 import AirplaneSeat from './airplaneSeat';
 import AirplaneGrid from './airplaneGrid';
-
+import OverHeadCompartment from './overHeadCompartment';
 
 /** When the DOM Content is loaded, initialize the program and load the data.*/
 document.addEventListener("DOMContentLoaded", async function(e) {
@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", async function(e) {
   customElements.define('airport-weather', GetAirportWeather);
   customElements.define('airplane-seat', AirplaneSeat);
   customElements.define('airplane-grid', AirplaneGrid);
+  customElements.define('overhead-compartment', OverHeadCompartment);
 
   // 2: Build the getWeather API
   let getAirportWeather = document.createElement('airport-weather');
@@ -38,4 +39,7 @@ document.addEventListener("DOMContentLoaded", async function(e) {
     */
 
 
+    //4: Overhead Test
+    let o = document.createElement("overhead-compartment");
+    document.body.appendChild(o);
 });
