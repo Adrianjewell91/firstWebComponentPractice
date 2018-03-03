@@ -17,6 +17,10 @@ span, article, footer, time, small {
   background: inherit;
 }
 
+input:focus {
+  outline: none;
+}
+
 ol, ul {
   list-style: none;
 }

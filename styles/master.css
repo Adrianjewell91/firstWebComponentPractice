@@ -16,6 +16,9 @@ span, article, footer, time, small {
   box-sizing: inherit;
   background: inherit; }
 
+input:focus {
+  outline: none; }
+
 ol, ul {
   list-style: none; }
 
@@ -38,9 +41,11 @@ input[type="submit"] {
   flex-direction: column; }
 
 .header {
-  text-align: center; }
+  text-align: center;
+  font-size: xx-large; }
 
 body {
+  margin: 5% 5% 0;
   align-items: normal;
   background: ghostwhite; }
 
