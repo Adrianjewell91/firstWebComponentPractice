@@ -12,22 +12,34 @@ class AirplaneGrid extends HTMLElement {
 
     shadowRoot.innerHTML = `
       <style>
+       /* :host {
+         margin: auto;
+       } */
+
         #grid {
-          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
         }
+
+        .row {
+          display: flex;
+        }
+
       </style>
       <div id="grid">
       </div>
     `;
 
     /** This is the algorithm for populating the airplane with seats */
-
     this._numberOfSeats = 21;
     this._numberOfColumns = 2;
     this._numberOfRows = Math.ceil(this._numberOfSeats / this._numberOfColumns);
 
+    // Build Rows
     for (let i = 0; i < this._numberOfRows; i++) {
       let row = document.createElement("div");
+      row.classList.add("row")
       row.id = `row-${i}`;
       shadowRoot.querySelector("#grid").appendChild(row);
     }
@@ -36,6 +48,7 @@ class AirplaneGrid extends HTMLElement {
     let k = 0; //Columns
     let l = 0 //Count seats
 
+    //Populate rows and columns
     while (j < this._numberOfRows) {
 
       while (k < this._numberOfColumns) {
@@ -44,6 +57,8 @@ class AirplaneGrid extends HTMLElement {
         shadowRoot.querySelector(`#row-${j}`).appendChild(airplaneSeat);
         k ++;
         l ++;
+
+        /** Handles odd numbers right here. */
         if (l === this._numberOfSeats) {break;}
       }
 

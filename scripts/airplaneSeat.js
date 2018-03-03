@@ -35,7 +35,6 @@ class AirplaneSeat extends HTMLElement {
   }
 
   _changeColor() {
-    console.log("clicked seat");
     this._seat.classList.toggle("occupied");
   }
 }
