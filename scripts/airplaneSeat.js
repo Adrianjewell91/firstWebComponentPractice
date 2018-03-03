@@ -18,6 +18,7 @@ class AirplaneSeat extends HTMLElement {
           border: 1px solid black;
           width: 50px;
           height: 50px;
+          display: inline-block;
         }
 
         .occupied {
