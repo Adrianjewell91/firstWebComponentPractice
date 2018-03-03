@@ -1,5 +1,4 @@
 /** This is an ES6 weather widget */
-
 class GetAirportWeather extends HTMLElement {
   constructor() {
     super();
