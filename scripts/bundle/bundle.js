@@ -240,6 +240,7 @@ class AirplaneSeat extends HTMLElement {
 
   _changeColor() {
     this._seat.classList.toggle("occupied");
+    //here is where I'd want to increment or decrement the counter;
   }
 }
 
@@ -284,6 +285,8 @@ class AirplaneGrid extends HTMLElement {
       </div>
     `;
 
+    this._totalOccupied = 0;
+
     /** This is the algorithm for populating the airplane with seats */
     this._numberOfSeats = 21;
     this._numberOfColumns = 2;
@@ -302,12 +305,16 @@ class AirplaneGrid extends HTMLElement {
     let l = 0 //Count seats
 
     //Populate rows and columns
-    while (j < this._numberOfRows) {
+    this._boundOnSeatClick = this._alterTotalOccupied.bind(this);
 
+    while (j < this._numberOfRows) {
       while (k < this._numberOfColumns) {
         let airplaneSeat = document.createElement('airplane-seat');
         airplaneSeat.id = `row-${j}-col-${k}`;
         shadowRoot.querySelector(`#row-${j}`).appendChild(airplaneSeat);
+
+        airplaneSeat.addEventListener("click", this._boundOnSeatClick);
+
         k ++;
         l ++;
 
@@ -321,7 +328,19 @@ class AirplaneGrid extends HTMLElement {
 
   }
 
+  _alterTotalOccupied(e) {
+    // debugger
+    if (e.target
+         .shadowRoot
+         .querySelector("#one-seat")
+         .classList.contains("occupied")) {
+      this._totalOccupied++;
+    } else {
+      this._totalOccupied--;
+    }
 
+    console.log("total occupied:", this._totalOccupied);
+  }
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (AirplaneGrid);
@@ -367,13 +386,12 @@ class OverHeadCompartment extends HTMLElement {
     /** Add bins
 
     */
-
     this._numberofSpaces = 3;
     this._boundOnCompartmentClick = this._changeColor.bind(this);
 
     for (let i = 0; i < this._numberofSpaces; i++) {
       let space = document.createElement("div");
-      space.classList.add("space")
+      space.classList.add("space");
       space.id = `space`;
       space.addEventListener("click", this._boundOnCompartmentClick);
       shadowRoot.querySelector("#bin").appendChild(space);
@@ -382,7 +400,6 @@ class OverHeadCompartment extends HTMLElement {
   }
 
   _changeColor(e) {
-  
     e.target.classList.toggle("occupied");
   }
 

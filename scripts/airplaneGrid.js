@@ -31,6 +31,8 @@ class AirplaneGrid extends HTMLElement {
       </div>
     `;
 
+    this._totalOccupied = 0;
+
     /** This is the algorithm for populating the airplane with seats */
     this._numberOfSeats = 21;
     this._numberOfColumns = 2;
@@ -49,12 +51,16 @@ class AirplaneGrid extends HTMLElement {
     let l = 0 //Count seats
 
     //Populate rows and columns
-    while (j < this._numberOfRows) {
+    this._boundOnSeatClick = this._alterTotalOccupied.bind(this);
 
+    while (j < this._numberOfRows) {
       while (k < this._numberOfColumns) {
         let airplaneSeat = document.createElement('airplane-seat');
         airplaneSeat.id = `row-${j}-col-${k}`;
         shadowRoot.querySelector(`#row-${j}`).appendChild(airplaneSeat);
+
+        airplaneSeat.addEventListener("click", this._boundOnSeatClick);
+
         k ++;
         l ++;
 
@@ -68,7 +74,19 @@ class AirplaneGrid extends HTMLElement {
 
   }
 
+  _alterTotalOccupied(e) {
+    // debugger
+    if (e.target
+         .shadowRoot
+         .querySelector("#one-seat")
+         .classList.contains("occupied")) {
+      this._totalOccupied++;
+    } else {
+      this._totalOccupied--;
+    }
 
+    console.log("total occupied:", this._totalOccupied);
+  }
 }
 
 export default AirplaneGrid;

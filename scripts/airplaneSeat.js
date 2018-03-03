@@ -36,6 +36,7 @@ class AirplaneSeat extends HTMLElement {
 
   _changeColor() {
     this._seat.classList.toggle("occupied");
+    //here is where I'd want to increment or decrement the counter;
   }
 }
 

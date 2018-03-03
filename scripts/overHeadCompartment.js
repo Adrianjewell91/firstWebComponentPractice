@@ -33,13 +33,12 @@ class OverHeadCompartment extends HTMLElement {
     /** Add bins
 
     */
-
     this._numberofSpaces = 3;
     this._boundOnCompartmentClick = this._changeColor.bind(this);
 
     for (let i = 0; i < this._numberofSpaces; i++) {
       let space = document.createElement("div");
-      space.classList.add("space")
+      space.classList.add("space");
       space.id = `space`;
       space.addEventListener("click", this._boundOnCompartmentClick);
       shadowRoot.querySelector("#bin").appendChild(space);
@@ -48,7 +47,6 @@ class OverHeadCompartment extends HTMLElement {
   }
 
   _changeColor(e) {
-  
     e.target.classList.toggle("occupied");
   }
 
