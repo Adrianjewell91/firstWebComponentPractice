@@ -71,6 +71,8 @@
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getWeatherElement__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__airplaneSeat__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__airplaneGrid__ = __webpack_require__(3);
+
 
 
 
@@ -80,19 +82,19 @@ document.addEventListener("DOMContentLoaded", async function(e) {
 
   // 1:
   console.log(e);
+  customElements.define('airport-weather', __WEBPACK_IMPORTED_MODULE_0__getWeatherElement__["a" /* default */]);
+  customElements.define('airplane-seat', __WEBPACK_IMPORTED_MODULE_1__airplaneSeat__["a" /* default */]);
+  customElements.define('airplane-grid', __WEBPACK_IMPORTED_MODULE_2__airplaneGrid__["a" /* default */]);
 
   // 2: Build the getWeather API
-  customElements.define('airport-weather', __WEBPACK_IMPORTED_MODULE_0__getWeatherElement__["a" /* default */]);
-    let getAirportWeather = document.createElement('airport-weather');
-    getAirportWeather.classList.add("flex-and-column");
-
+  let getAirportWeather = document.createElement('airport-weather');
+  getAirportWeather.classList.add("flex-and-column");
   document.body.appendChild(getAirportWeather);
 
   // 3: Build the overhead luggage compartment.
-  customElements.define('airplane-seat', __WEBPACK_IMPORTED_MODULE_1__airplaneSeat__["a" /* default */]);
-    let airplaneSeat = document.createElement('airplane-seat');
-    
-  document.body.appendChild(airplaneSeat);
+  //Insert custom elements inside of other custom elements.
+  let airplaneGrid = document.createElement("airplane-grid");
+  document.body.appendChild(airplaneGrid);
 
   // What needs to happen here:
 
@@ -162,7 +164,8 @@ class GetAirportWeather extends HTMLElement {
     await a.then((r) => r.json()).then((r) => {
       /** Change the innerhtml
           Put this into the inner html
-          @this.shadowRoot came into existance at line 5: #this.attachShadow */
+          @this.shadowRoot came into existance at line 7: #this.attachShadow */
+
       var info = this.shadowRoot.getElementById('info');
       if (info) { info.remove() }
       info = document.createElement("h1");
@@ -206,6 +209,10 @@ class AirplaneSeat extends HTMLElement {
 
     shadowRoot.innerHTML = `
       <style>
+        :host {
+          margin: 0.5%;
+        }
+
         #one-seat {
           border: 1px solid black;
           width: 50px;
@@ -232,6 +239,36 @@ class AirplaneSeat extends HTMLElement {
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (AirplaneSeat);
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/** Airplane Grid - airplane seats are inserted into airplane Grids */
+
+class AirplaneGrid extends HTMLElement {
+  constructor() {
+    super();
+
+    const shadowRoot = this.attachShadow({mode: "open"});
+
+    shadowRoot.innerHTML = `
+      <style></style>
+      <div id="grid"></div>
+    `;
+
+    for (let i = 0; i< 20; i++) {
+      let airplaneSeat = document.createElement('airplane-seat');
+      airplaneSeat.id = `seat${i}`;
+      shadowRoot.querySelector("#grid").appendChild(airplaneSeat);
+    }
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (AirplaneGrid);
 
 
 /***/ })

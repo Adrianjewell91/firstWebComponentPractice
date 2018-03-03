@@ -1,5 +1,6 @@
 import GetAirportWeather from './getWeatherElement';
 import AirplaneSeat from './airplaneSeat';
+import AirplaneGrid from './airplaneGrid';
 
 
 /** When the DOM Content is loaded, initialize the program and load the data.*/
@@ -7,19 +8,19 @@ document.addEventListener("DOMContentLoaded", async function(e) {
 
   // 1:
   console.log(e);
+  customElements.define('airport-weather', GetAirportWeather);
+  customElements.define('airplane-seat', AirplaneSeat);
+  customElements.define('airplane-grid', AirplaneGrid);
 
   // 2: Build the getWeather API
-  customElements.define('airport-weather', GetAirportWeather);
-    let getAirportWeather = document.createElement('airport-weather');
-    getAirportWeather.classList.add("flex-and-column");
-
+  let getAirportWeather = document.createElement('airport-weather');
+  getAirportWeather.classList.add("flex-and-column");
   document.body.appendChild(getAirportWeather);
 
   // 3: Build the overhead luggage compartment.
-  customElements.define('airplane-seat', AirplaneSeat);
-    let airplaneSeat = document.createElement('airplane-seat');
-    
-  document.body.appendChild(airplaneSeat);
+  //Insert custom elements inside of other custom elements.
+  let airplaneGrid = document.createElement("airplane-grid");
+  document.body.appendChild(airplaneGrid);
 
   // What needs to happen here:
 

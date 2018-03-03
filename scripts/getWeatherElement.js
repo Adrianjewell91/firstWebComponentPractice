@@ -42,7 +42,8 @@ class GetAirportWeather extends HTMLElement {
     await a.then((r) => r.json()).then((r) => {
       /** Change the innerhtml
           Put this into the inner html
-          @this.shadowRoot came into existance at line 5: #this.attachShadow */
+          @this.shadowRoot came into existance at line 7: #this.attachShadow */
+
       var info = this.shadowRoot.getElementById('info');
       if (info) { info.remove() }
       info = document.createElement("h1");
