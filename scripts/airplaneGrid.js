@@ -43,7 +43,7 @@ class AirplaneGrid extends HTMLElement {
     this._numberOfRows = Math.ceil(this._numberOfSeats / this._numberOfColumns);
 
     /** Eventually add @this._numberOfBins and @this._spacesPerBin */
-    this._numberOfBins = 3;
+    this._numberOfBins = 6;
 
     /** Build the plane and bins */
     this._buildPlane();
@@ -100,7 +100,6 @@ class AirplaneGrid extends HTMLElement {
                   .shadowRoot.querySelectorAll("#space");
 
 
-
     if (this._totalOccupied <= this._numberOfBins) {
       //Iterate through them and when you find the matching bin, click it();
       let i = 0;
@@ -115,48 +114,6 @@ class AirplaneGrid extends HTMLElement {
 
     0;
   }
-
-  // _unOccupyOverHeadBin(e) {
-  //   /** If totalOccupied <= number of bins, find the bin whose data matches
-  //       the totaOccupied and click it.
-  //
-  //    */
-  //   let bin = this.shadowRoot.querySelector('overhead-compartment')
-  //                 .shadowRoot.querySelectorAll("#space");
-  //
-  //   if (this._totalOccupied <= this._numberOfBins) {
-  //     //Iterate through them and when you find the matching bin, click it();
-  //     let i = 0;
-  //     while (i < bin.length) {
-  //       if (bin[i].data === this._totalOccupied) {
-  //         bin[i].click();
-  //         break;
-  //       }
-  //       i++;
-  //     }
-  //   }
-  //
-  //   0;
-  // }
-  //
-  // _occupyOverHeadBin(e) {
-  //   let bin = this.shadowRoot.querySelector('overhead-compartment')
-  //                 .shadowRoot.querySelectorAll("#space");
-  //
-  //   if (this._totalOccupied <= this._numberOfBins) {
-  //     //Iterate through them and when you find the matching bin, click it();
-  //     let i = 0;
-  //     while (i < bin.length) {
-  //       if (bin[i].data === 0) {
-  //         bin[i].click();
-  //         break;
-  //       }
-  //       i++;
-  //     }
-  //   }
-  //
-  //   0;
-  // }
 
   _alterTotalOccupied(e) {
     /** Do it first in order to compare the current totalOccupied with the data;

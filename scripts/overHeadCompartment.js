@@ -31,7 +31,7 @@ class OverHeadCompartment extends HTMLElement {
     /** Add bins
 
     */
-    this._numberofSpaces = 3;
+    this._numberofSpaces = 6;
     this._boundOnCompartmentClick = this._changeColor.bind(this);
 
     this._binsOccupied = 0
