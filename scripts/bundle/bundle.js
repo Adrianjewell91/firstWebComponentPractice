@@ -346,19 +346,17 @@ class AirplaneGrid extends HTMLElement {
     this.shadowRoot.appendChild(this._overheadBin);
   }
 
-  _unOccupyOverHeadBin(e) {
-    /** If totalOccupied <= number of bins, find the bin whose data matches
-        the totaOccupied and click it.
-
-     */
+  _changeOverHeadBin(e, testVal) {
     let bin = this.shadowRoot.querySelector('overhead-compartment')
                   .shadowRoot.querySelectorAll("#space");
+
+
 
     if (this._totalOccupied <= this._numberOfBins) {
       //Iterate through them and when you find the matching bin, click it();
       let i = 0;
       while (i < bin.length) {
-        if (bin[i].data === this._totalOccupied) {
+        if (bin[i].data === (testVal === 0 ? 0 : this._totalOccupied)) {
           bin[i].click();
           break;
         }
@@ -369,24 +367,47 @@ class AirplaneGrid extends HTMLElement {
     0;
   }
 
-  _occupyOverHeadBin(e) {
-    let bin = this.shadowRoot.querySelector('overhead-compartment')
-                  .shadowRoot.querySelectorAll("#space");
-
-    if (this._totalOccupied <= this._numberOfBins) {
-      //Iterate through them and when you find the matching bin, click it();
-      let i = 0;
-      while (i < bin.length) {
-        if (bin[i].data === 0) {
-          bin[i].click();
-          break;
-        }
-        i++;
-      }
-    }
-
-    0;
-  }
+  // _unOccupyOverHeadBin(e) {
+  //   /** If totalOccupied <= number of bins, find the bin whose data matches
+  //       the totaOccupied and click it.
+  //
+  //    */
+  //   let bin = this.shadowRoot.querySelector('overhead-compartment')
+  //                 .shadowRoot.querySelectorAll("#space");
+  //
+  //   if (this._totalOccupied <= this._numberOfBins) {
+  //     //Iterate through them and when you find the matching bin, click it();
+  //     let i = 0;
+  //     while (i < bin.length) {
+  //       if (bin[i].data === this._totalOccupied) {
+  //         bin[i].click();
+  //         break;
+  //       }
+  //       i++;
+  //     }
+  //   }
+  //
+  //   0;
+  // }
+  //
+  // _occupyOverHeadBin(e) {
+  //   let bin = this.shadowRoot.querySelector('overhead-compartment')
+  //                 .shadowRoot.querySelectorAll("#space");
+  //
+  //   if (this._totalOccupied <= this._numberOfBins) {
+  //     //Iterate through them and when you find the matching bin, click it();
+  //     let i = 0;
+  //     while (i < bin.length) {
+  //       if (bin[i].data === 0) {
+  //         bin[i].click();
+  //         break;
+  //       }
+  //       i++;
+  //     }
+  //   }
+  //
+  //   0;
+  // }
 
   _alterTotalOccupied(e) {
     /** Do it first in order to compare the current totalOccupied with the data;
@@ -397,10 +418,10 @@ class AirplaneGrid extends HTMLElement {
          .querySelector("#one-seat")
          .classList.contains("occupied")) {
 
-      this._occupyOverHeadBin(e)
+      this._changeOverHeadBin(e, 0)
       this._totalOccupied++;
     } else {
-      this._unOccupyOverHeadBin(e);
+      this._changeOverHeadBin(e);
       this._totalOccupied--;
     }
 
