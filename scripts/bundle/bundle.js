@@ -264,11 +264,12 @@ class AirplaneGrid extends HTMLElement {
        :host {
          margin: auto;
        }
-
+       
         #grid {
           display: inline-flex;
           flex-direction: column;
           align-items: center;
+          margin-left: 10px;
         }
 
         .row {
@@ -289,7 +290,7 @@ class AirplaneGrid extends HTMLElement {
     this._totalOccupied = 0;
 
     /** This is the algorithm for populating the airplane with seats */
-    this._numberOfSeats = 10;
+    this._numberOfSeats = 12;
     this._numberOfColumns = 2;
     this._numberOfRows = Math.ceil(this._numberOfSeats / this._numberOfColumns);
 
@@ -436,7 +437,7 @@ class OverHeadCompartment extends HTMLElement {
     this._numberofSpaces = 5;
     this._boundOnCompartmentClick = this._changeColor.bind(this);
 
-    this._binsOccupied = 0
+    this._binsOccupied = 0;
 
     for (let i = 0; i < this._numberofSpaces; i++) {
       let space = document.createElement("div");

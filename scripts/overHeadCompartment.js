@@ -39,7 +39,7 @@ class OverHeadCompartment extends HTMLElement {
     this._numberofSpaces = 5;
     this._boundOnCompartmentClick = this._changeColor.bind(this);
 
-    this._binsOccupied = 0
+    this._binsOccupied = 0;
 
     for (let i = 0; i < this._numberofSpaces; i++) {
       let space = document.createElement("div");
