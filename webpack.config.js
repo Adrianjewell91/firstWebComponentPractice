@@ -22,3 +22,5 @@ module.exports = {
   watch: true,
   devtool: 'source-maps'
 }
+
+//Research how to transpile custom elements into previous work. 

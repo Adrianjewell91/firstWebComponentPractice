@@ -38,8 +38,8 @@ class OverHeadCompartment extends HTMLElement {
 
     for (let i = 0; i < this._numberofSpaces; i++) {
       let space = document.createElement("div");
-      space.classList.add("space");
       space.id = `space`;
+      space.data = 0;
       space.addEventListener("click", this._boundOnCompartmentClick);
       shadowRoot.querySelector("#bin").appendChild(space);
     }
