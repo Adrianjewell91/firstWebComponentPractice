@@ -38,8 +38,4 @@ document.addEventListener("DOMContentLoaded", async function(e) {
         Doing all of this using custom elements.
     */
 
-
-    //4: Overhead Test
-    let o = document.createElement("overhead-compartment");
-    document.body.appendChild(o);
 });

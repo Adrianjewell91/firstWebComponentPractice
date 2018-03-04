@@ -113,10 +113,6 @@ document.addEventListener("DOMContentLoaded", async function(e) {
         Doing all of this using custom elements.
     */
 
-
-    //4: Overhead Test
-    let o = document.createElement("overhead-compartment");
-    document.body.appendChild(o);
 });
 
 
@@ -292,12 +288,22 @@ class AirplaneGrid extends HTMLElement {
     this._numberOfColumns = 2;
     this._numberOfRows = Math.ceil(this._numberOfSeats / this._numberOfColumns);
 
+    /** Eventually add @this._numberOfBins and @this._spacesPerBin */
+
+
+    /** Build the plane and bins */
+    this._buildPlane();
+    this._buildOverHeadBins();
+
+  }
+
+  _buildPlane() {
     // Build Rows
     for (let i = 0; i < this._numberOfRows; i++) {
       let row = document.createElement("div");
       row.classList.add("row")
       row.id = `row-${i}`;
-      shadowRoot.querySelector("#grid").appendChild(row);
+      this.shadowRoot.querySelector("#grid").appendChild(row);
     }
 
     let j = 0; //Rows
@@ -311,7 +317,7 @@ class AirplaneGrid extends HTMLElement {
       while (k < this._numberOfColumns) {
         let airplaneSeat = document.createElement('airplane-seat');
         airplaneSeat.id = `row-${j}-col-${k}`;
-        shadowRoot.querySelector(`#row-${j}`).appendChild(airplaneSeat);
+        this.shadowRoot.querySelector(`#row-${j}`).appendChild(airplaneSeat);
 
         airplaneSeat.addEventListener("click", this._boundOnSeatClick);
 
@@ -328,8 +334,19 @@ class AirplaneGrid extends HTMLElement {
 
   }
 
+  _buildOverHeadBins() {
+    /** Builds a Single Overhead Bin.
+        Will eventually want to build out as many as we need */
+    this._overheadBin = document.createElement("overhead-compartment");
+    this.shadowRoot.appendChild(this._overheadBin);
+  }
+
+  _occupyOverHeadBin(e) {
+    /** If totalOccupid <= number of bins, find the last bin clicked
+        and disable it */
+  }
+
   _alterTotalOccupied(e) {
-    // debugger
     if (e.target
          .shadowRoot
          .querySelector("#one-seat")
@@ -378,9 +395,7 @@ class OverHeadCompartment extends HTMLElement {
           background: gray;
         }
       </style>
-      <div id="bin">
-
-      </div>
+      <div id="bin"></div>
     `;
 
     /** Add bins
@@ -388,6 +403,8 @@ class OverHeadCompartment extends HTMLElement {
     */
     this._numberofSpaces = 3;
     this._boundOnCompartmentClick = this._changeColor.bind(this);
+
+    this._binsOccupied = 0
 
     for (let i = 0; i < this._numberofSpaces; i++) {
       let space = document.createElement("div");
@@ -401,6 +418,16 @@ class OverHeadCompartment extends HTMLElement {
 
   _changeColor(e) {
     e.target.classList.toggle("occupied");
+
+    if (e.target.classList.contains("occupied")) {
+      this._binsOccupied++;
+      e.target.data = this._binsOccupied;
+    } else {
+      this._binsOccupied--;
+      e.target.data = 0;
+    }
+
+    console.log(this._binsOccupied);
   }
 
 }

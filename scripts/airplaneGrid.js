@@ -38,12 +38,22 @@ class AirplaneGrid extends HTMLElement {
     this._numberOfColumns = 2;
     this._numberOfRows = Math.ceil(this._numberOfSeats / this._numberOfColumns);
 
+    /** Eventually add @this._numberOfBins and @this._spacesPerBin */
+
+
+    /** Build the plane and bins */
+    this._buildPlane();
+    this._buildOverHeadBins();
+
+  }
+
+  _buildPlane() {
     // Build Rows
     for (let i = 0; i < this._numberOfRows; i++) {
       let row = document.createElement("div");
       row.classList.add("row")
       row.id = `row-${i}`;
-      shadowRoot.querySelector("#grid").appendChild(row);
+      this.shadowRoot.querySelector("#grid").appendChild(row);
     }
 
     let j = 0; //Rows
@@ -57,7 +67,7 @@ class AirplaneGrid extends HTMLElement {
       while (k < this._numberOfColumns) {
         let airplaneSeat = document.createElement('airplane-seat');
         airplaneSeat.id = `row-${j}-col-${k}`;
-        shadowRoot.querySelector(`#row-${j}`).appendChild(airplaneSeat);
+        this.shadowRoot.querySelector(`#row-${j}`).appendChild(airplaneSeat);
 
         airplaneSeat.addEventListener("click", this._boundOnSeatClick);
 
@@ -74,8 +84,19 @@ class AirplaneGrid extends HTMLElement {
 
   }
 
+  _buildOverHeadBins() {
+    /** Builds a Single Overhead Bin.
+        Will eventually want to build out as many as we need */
+    this._overheadBin = document.createElement("overhead-compartment");
+    this.shadowRoot.appendChild(this._overheadBin);
+  }
+
+  _occupyOverHeadBin(e) {
+    /** If totalOccupid <= number of bins, find the last bin clicked
+        and disable it */
+  }
+
   _alterTotalOccupied(e) {
-    // debugger
     if (e.target
          .shadowRoot
          .querySelector("#one-seat")
