@@ -11,8 +11,8 @@ class AirplaneSeat extends HTMLElement {
     shadowRoot.innerHTML = `
       <style>
         :host {
-          margin-top: 5%;
-          margin-bottom: 5%; 
+          /* margin-top: 5%; */
+          margin-bottom: 10px;
         }
 
         #one-seat {

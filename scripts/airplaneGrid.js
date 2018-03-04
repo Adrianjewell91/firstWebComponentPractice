@@ -4,17 +4,15 @@ class AirplaneGrid extends HTMLElement {
   constructor() {
     super();
 
-    const shadowRoot = this.attachShadow({mode: "open"});
-
+    this.attachShadow({mode: "open"});
     /** The goal is to put the seats into the correct rows and columns
         Eventually based on user input. For now, it's set to default.
     */
-
-    shadowRoot.innerHTML = `
+    this.shadowRoot.innerHTML = `
       <style>
-       /* :host {
+       :host {
          margin: auto;
-       } */
+       }
 
         #grid {
           display: inline-flex;
@@ -31,7 +29,9 @@ class AirplaneGrid extends HTMLElement {
         }
 
       </style>
-      <div id="grid">
+      <div id='plane'>
+        <div id="grid">
+        </div>
       </div>
     `;
 
@@ -71,8 +71,11 @@ class AirplaneGrid extends HTMLElement {
       while (k < this._numberOfColumns) {
         let airplaneSeat = document.createElement('airplane-seat');
         airplaneSeat.id = `row-${j}-col-${k}`;
+
+        //Add the seat to the DOM.
         this.shadowRoot.querySelector(`#row-${j}`).appendChild(airplaneSeat);
 
+        //Attach an event listener that updates the overhead bin storage.
         airplaneSeat.addEventListener("click", this._boundOnSeatClick);
 
         k ++;
@@ -85,14 +88,13 @@ class AirplaneGrid extends HTMLElement {
       j ++;
       k = 0;
     }
-
   }
 
   _buildOverHeadBins() {
     /** Builds a Single Overhead Bin.
         Will eventually want to build out as many as we need */
     this._overheadBin = document.createElement("overhead-compartment");
-    this.shadowRoot.appendChild(this._overheadBin);
+    this.shadowRoot.querySelector('#plane').appendChild(this._overheadBin);
   }
 
   _changeOverHeadBin(e, testVal) {
