@@ -264,12 +264,26 @@ class AirplaneGrid extends HTMLElement {
        :host {
          margin: auto;
        }
-       
+
+       #plane {
+         /* display: flex;
+         flex-direction: row; */
+       }
+
+       #left-overhead {
+         float: left;
+       }
+
+       #right-overhead {
+         float: right;
+       }
+
         #grid {
           display: inline-flex;
           flex-direction: column;
           align-items: center;
           margin-left: 10px;
+          margin-right: 10px
         }
 
         .row {
@@ -299,7 +313,9 @@ class AirplaneGrid extends HTMLElement {
 
     /** Build the plane and bins */
     this._buildPlane();
-    this._buildOverHeadBins();
+    this._buildOverHeadBins('left-overhead');
+    this._buildOverHeadBins('right-overhead');
+
 
   }
 
@@ -342,11 +358,12 @@ class AirplaneGrid extends HTMLElement {
     }
   }
 
-  _buildOverHeadBins() {
+  _buildOverHeadBins(val) {
     /** Builds a Single Overhead Bin.
         Will eventually want to build out as many as we need */
-    this._overheadBin = document.createElement("overhead-compartment");
-    this.shadowRoot.querySelector('#plane').appendChild(this._overheadBin);
+    let overheadBin = document.createElement("overhead-compartment");
+    overheadBin.id = val;
+    this.shadowRoot.querySelector('#plane').appendChild(overheadBin);
   }
 
   _changeOverHeadBin(e, testVal) {
