@@ -268,7 +268,7 @@ class AirplaneGrid extends HTMLElement {
        } */
 
         #grid {
-          display: flex;
+          display: inline-flex;
           flex-direction: column;
           align-items: center;
         }
@@ -294,7 +294,7 @@ class AirplaneGrid extends HTMLElement {
     this._numberOfRows = Math.ceil(this._numberOfSeats / this._numberOfColumns);
 
     /** Eventually add @this._numberOfBins and @this._spacesPerBin */
-    this._numberOfBins = 6;
+    this._numberOfBins = 5;
 
     /** Build the plane and bins */
     this._buildPlane();
@@ -369,7 +369,6 @@ class AirplaneGrid extends HTMLElement {
   _alterTotalOccupied(e) {
     /** Do it first in order to compare the current totalOccupied with the data;
     */
-
     if (e.target
          .shadowRoot
          .querySelector("#one-seat")
@@ -402,6 +401,11 @@ class OverHeadCompartment extends HTMLElement {
 
     shadowRoot.innerHTML = `
       <style>
+
+        :host {
+          float: left;
+        }
+
         #bin {
           border: 1px solid black;
           width: fit-content;
@@ -427,7 +431,7 @@ class OverHeadCompartment extends HTMLElement {
     /** Add bins
 
     */
-    this._numberofSpaces = 6;
+    this._numberofSpaces = 5;
     this._boundOnCompartmentClick = this._changeColor.bind(this);
 
     this._binsOccupied = 0

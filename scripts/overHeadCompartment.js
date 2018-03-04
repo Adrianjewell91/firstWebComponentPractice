@@ -6,6 +6,11 @@ class OverHeadCompartment extends HTMLElement {
 
     shadowRoot.innerHTML = `
       <style>
+
+        :host {
+          float: left;
+        }
+
         #bin {
           border: 1px solid black;
           width: fit-content;
@@ -31,7 +36,7 @@ class OverHeadCompartment extends HTMLElement {
     /** Add bins
 
     */
-    this._numberofSpaces = 6;
+    this._numberofSpaces = 5;
     this._boundOnCompartmentClick = this._changeColor.bind(this);
 
     this._binsOccupied = 0
