@@ -301,7 +301,10 @@ class AirplaneGrid extends HTMLElement {
       </div>
     `;
 
-    this._totalOccupied = 0;
+    this._totalLeftOccupied = 0;
+    this._totalRightOccupied = 0;
+    this._totalOccupiedAccessor = [this._totalLeftOccupied,
+                                   this._totalRightOccupied];
 
     /** This is the algorithm for populating the airplane with seats */
     this._numberOfSeats = 17;
@@ -358,24 +361,30 @@ class AirplaneGrid extends HTMLElement {
     }
   }
 
+  /** Builds a Single Overhead Bin.
+  Will eventually want to build out as many as we need */
   _buildOverHeadBins(val) {
-    /** Builds a Single Overhead Bin.
-        Will eventually want to build out as many as we need */
     let overheadBin = document.createElement("overhead-compartment");
     overheadBin.id = val;
     this.shadowRoot.querySelector('#plane').appendChild(overheadBin);
   }
 
-  _changeOverHeadBin(e, testVal) {
-    let bin = this.shadowRoot.querySelector('#left-overhead')
+  /** Changes the appropriae overhead bin */
+  _changeOverHeadBin(e, sideOfPlane, testVal) {
+
+    let bin = this.shadowRoot.querySelector(`#${sideOfPlane}-overhead`)
                   .shadowRoot.querySelectorAll("#space");
+    let totalOccupiedAccessor = [this._totalLeftOccupied,
+                                 this._totalRightOccupied];
+    let selector = sideOfPlane === "left" ? 0 : 1;
 
 
-    if (this._totalOccupied <= this._numberOfBins) {
+    if (totalOccupiedAccessor[selector] <= this._numberOfBins) {
       //Iterate through them and when you find the matching bin, click it();
       let i = 0;
       while (i < bin.length) {
-        if (bin[i].data === (testVal === 0 ? 0 : this._totalOccupied)) {
+        if (bin[i].data === (testVal === 0 ?
+                                         0 : totalOccupiedAccessor[selector])) {
           bin[i].click();
           break;
         }
@@ -387,21 +396,47 @@ class AirplaneGrid extends HTMLElement {
   }
 
   _alterTotalOccupied(e) {
-    /** Do it first in order to compare the current totalOccupied with the data;
+    /** Do it first in order to compare the current totalRightOccupied with the data;
     */
+    let testVal = undefined;
+    //Determine the side of
+    let sideOfPlane = 'left';
+    let totalOccupiedAccessor = [this._totalLeftOccupied,
+                                 this._totalRightOccupied];
+    let selector = sideOfPlane === "left" ? 0 : 1;
+
+    //Determine occupied or not.
     if (e.target
          .shadowRoot
          .querySelector("#one-seat")
          .classList.contains("occupied")) {
 
-      this._changeOverHeadBin(e, 0)
-      this._totalOccupied++;
-    } else {
-      this._changeOverHeadBin(e);
-      this._totalOccupied--;
+      testVal = 0;
     }
 
-    console.log("total occupied:", this._totalOccupied);
+    /**Determine left or right side.
+       Check the column number over the this._numberOfColumns. */
+    
+
+    //Do the change.
+    this._changeOverHeadBin(e, sideOfPlane, testVal);
+
+    function increment() {
+      //In this function, metaprogram the lines immediately below.
+    }
+
+    if (testVal === undefined) {
+      if (sideOfPlane === 'left') { this._totalLeftOccupied--; } else {
+          this._totalRightOccupied--;
+      }
+    } else {
+      if (sideOfPlane === 'left') { this._totalLeftOccupied++; } else {
+          this._totalRightOccupied++;
+      }
+    }
+
+    console.log("total right occupied:", this._totalRightOccupied);
+    console.log("total left occupied:", this._totalLeftOccupied);
   }
 }
 
