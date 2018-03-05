@@ -164,8 +164,12 @@ class AirplaneGrid extends HTMLElement {
     }
 
     /**Determine left or right side.
-       Check the column number over the this._numberOfColumns. */
-    
+       If the column number is great than the mid point, do this on the right.
+       */
+       // debugger;
+    if (parseInt(e.target.id[e.target.id.length-1]) >= this._numberOfColumns/2 ) {
+      sideOfPlane = 'right';
+    }
 
     //Do the change.
     this._changeOverHeadBin(e, sideOfPlane, testVal);
