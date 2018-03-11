@@ -274,27 +274,30 @@ class AirplaneGrid extends HTMLElement {
       <style>
        :host {
          margin: auto;
+         display: flex;
+         justify-content: center;
+
        }
 
        #plane {
-         /* display: flex;
-         flex-direction: row; */
+         display: grid;
        }
 
        #left-overhead {
-         float: left;
+
+         grid-column: 1/2;
+         grid-row: 1/2;
        }
 
        #right-overhead {
-         float: right;
+         grid-column: 3/4;
+         grid-row: 1/2;
+         /* float: right; */
        }
 
         #grid {
-          display: inline-flex;
-          flex-direction: column;
-          align-items: center;
-          margin-left: 10px;
-          margin-right: 10px
+          grid-column: 2/3;
+
         }
 
         .row {
