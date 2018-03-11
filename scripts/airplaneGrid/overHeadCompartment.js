@@ -1,4 +1,8 @@
 class OverHeadCompartment extends HTMLElement {
+  set numberOfBins(val) {
+    this._numberOfBins = val;
+  }
+
   constructor() {
     super();
 
@@ -33,22 +37,22 @@ class OverHeadCompartment extends HTMLElement {
       <div id="bin"></div>
     `;
 
-    /** Add bins
+  }
 
+  connectedCallback() {
+    /** Add bins
     */
-    this._numberofSpaces = 5;
     this._boundOnCompartmentClick = this._changeColor.bind(this);
 
     this._binsOccupied = 0;
-
-    for (let i = 0; i < this._numberofSpaces; i++) {
+    
+    for (let i = 0; i < this._numberOfBins; i++) {
       let space = document.createElement("div");
       space.id = `space`;
       space.data = 0;
       space.addEventListener("click", this._boundOnCompartmentClick);
-      shadowRoot.querySelector("#bin").appendChild(space);
+      this.shadowRoot.querySelector("#bin").appendChild(space);
     }
-
   }
 
   _changeColor(e) {
@@ -62,7 +66,7 @@ class OverHeadCompartment extends HTMLElement {
       e.target.data = 0;
     }
 
-    console.log(this._binsOccupied);
+    console.log("Number of bins occupied:", this._binsOccupied);
   }
 
 }

@@ -3983,13 +3983,13 @@ var _classCallCheck2 = __webpack_require__(/*! babel-runtime/helpers/classCallCh
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _createClass2 = __webpack_require__(/*! babel-runtime/helpers/createClass */ "./node_modules/babel-runtime/helpers/createClass.js");
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
 var _possibleConstructorReturn2 = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ "./node_modules/babel-runtime/helpers/possibleConstructorReturn.js");
 
 var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _createClass2 = __webpack_require__(/*! babel-runtime/helpers/createClass */ "./node_modules/babel-runtime/helpers/createClass.js");
+
+var _createClass3 = _interopRequireDefault(_createClass2);
 
 var _inherits2 = __webpack_require__(/*! babel-runtime/helpers/inherits */ "./node_modules/babel-runtime/helpers/inherits.js");
 
@@ -4009,20 +4009,35 @@ function _CustomElement() {
 
 var AirplaneGrid = function (_CustomElement2) {
   (0, _inherits3.default)(AirplaneGrid, _CustomElement2);
+  (0, _createClass3.default)(AirplaneGrid, [{
+    key: 'setNumberOfBins',
 
-  // What needs to happen here:
+    // What needs to happen here:
 
-  /** User puts in a number of rows and columns,
-      Airplane seats and luggage overheads are generated.
-      Clicking on a seat causes a space in the overhead to be filled.
-      Clicking on any seat will fill the overheads in constant order.
-       A few steps:
-        Building the generation algorithm.
-        Building the linkage between seats and overhead.
-        Styling it to make the seats look like seats and the overhead look
-          like overhead compartments.
-        Doing all of this using custom elements.
-    */
+    /** User puts in a number of rows and columns,
+        Airplane seats and luggage overheads are generated.
+        Clicking on a seat causes a space in the overhead to be filled.
+        Clicking on any seat will fill the overheads in constant order.
+         A few steps:
+          Building the generation algorithm.
+          Building the linkage between seats and overhead.
+          Styling it to make the seats look like seats and the overhead look
+            like overhead compartments.
+          Doing all of this using custom elements.
+      */
+
+    value: function setNumberOfBins(val) {
+      /** Eventually add @this._numberOfBins and @this._spacesPerBin */
+      this._numberOfBins = val;
+    }
+  }, {
+    key: 'setSeatsAndColumns',
+    value: function setSeatsAndColumns(seats, col) {
+      this._numberOfSeats = seats;
+      this._numberOfColumns = col;
+      this._numberOfRows = Math.ceil(this._numberOfSeats / this._numberOfColumns);
+    }
+  }]);
 
   function AirplaneGrid() {
     (0, _classCallCheck3.default)(this, AirplaneGrid);
@@ -4045,15 +4060,8 @@ var AirplaneGrid = function (_CustomElement2) {
       this._totalRightOccupied = 0;
       this._totalOccupiedAccessor = [this._totalLeftOccupied, this._totalRightOccupied];
 
-      /** This is the algorithm for populating the airplane with seats */
-      this._numberOfSeats = 17;
-      this._numberOfColumns = 2;
-      this._numberOfRows = Math.ceil(this._numberOfSeats / this._numberOfColumns);
-
-      /** Eventually add @this._numberOfBins and @this._spacesPerBin */
-      this._numberOfBins = 5;
-
       /** Build the plane and bins */
+      this.setSeatsAndColumns(18, 2);
       this._buildPlane();
       this._buildOverHeadBins('left-overhead');
       this._buildOverHeadBins('right-overhead');
@@ -4109,6 +4117,8 @@ var AirplaneGrid = function (_CustomElement2) {
     value: function _buildOverHeadBins(val) {
       var overheadBin = document.createElement("overhead-compartment");
       overheadBin.id = val;
+      overheadBin.numberOfBins = this._numberOfBins;
+      debugger;
       this.shadowRoot.querySelector('#plane').appendChild(overheadBin);
     }
 
@@ -4142,6 +4152,7 @@ var AirplaneGrid = function (_CustomElement2) {
       /** Do it first in order to compare the current totalRightOccupied with the data;
       */
       var testVal = undefined;
+
       //Determine the side of
       var sideOfPlane = 'left';
       var totalOccupiedAccessor = [this._totalLeftOccupied, this._totalRightOccupied];
@@ -4165,7 +4176,7 @@ var AirplaneGrid = function (_CustomElement2) {
       this._changeOverHeadBin(e, sideOfPlane, testVal);
 
       function increment() {
-        //In this function, metaprogram the lines immediately below.
+        //TODO: In this function, metaprogram the lines immediately below.
       }
 
       if (testVal === undefined) {
@@ -4347,13 +4358,13 @@ var _classCallCheck2 = __webpack_require__(/*! babel-runtime/helpers/classCallCh
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _createClass2 = __webpack_require__(/*! babel-runtime/helpers/createClass */ "./node_modules/babel-runtime/helpers/createClass.js");
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
 var _possibleConstructorReturn2 = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ "./node_modules/babel-runtime/helpers/possibleConstructorReturn.js");
 
 var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _createClass2 = __webpack_require__(/*! babel-runtime/helpers/createClass */ "./node_modules/babel-runtime/helpers/createClass.js");
+
+var _createClass3 = _interopRequireDefault(_createClass2);
 
 var _inherits2 = __webpack_require__(/*! babel-runtime/helpers/inherits */ "./node_modules/babel-runtime/helpers/inherits.js");
 
@@ -4371,6 +4382,12 @@ function _CustomElement() {
 
 var OverHeadCompartment = function (_CustomElement2) {
   (0, _inherits3.default)(OverHeadCompartment, _CustomElement2);
+  (0, _createClass3.default)(OverHeadCompartment, [{
+    key: "numberOfBins",
+    set: function set(val) {
+      this._numberOfBins = val;
+    }
+  }]);
 
   function OverHeadCompartment() {
     (0, _classCallCheck3.default)(this, OverHeadCompartment);
@@ -4381,25 +4398,27 @@ var OverHeadCompartment = function (_CustomElement2) {
 
     shadowRoot.innerHTML = "\n      <style>\n\n        :host {\n          float: left;\n        }\n\n        #bin {\n          border: 1px solid black;\n          width: fit-content;\n          height: 100%;\n        }\n\n        #space {\n          border: 1px solid black;\n          border-radius: 50%;\n          margin: 5px;\n          width: 50px;\n          height: 50px;\n          display: block;\n        }\n\n        .occupied {\n          background: gray;\n        }\n      </style>\n      <div id=\"bin\"></div>\n    ";
 
-    /** Add bins
-     */
-    _this._numberofSpaces = 5;
-    _this._boundOnCompartmentClick = _this._changeColor.bind(_this);
-
-    _this._binsOccupied = 0;
-
-    for (var i = 0; i < _this._numberofSpaces; i++) {
-      var space = document.createElement("div");
-      space.id = "space";
-      space.data = 0;
-      space.addEventListener("click", _this._boundOnCompartmentClick);
-      shadowRoot.querySelector("#bin").appendChild(space);
-    }
-
     return _this;
   }
 
   (0, _createClass3.default)(OverHeadCompartment, [{
+    key: "connectedCallback",
+    value: function connectedCallback() {
+      /** Add bins
+      */
+      this._boundOnCompartmentClick = this._changeColor.bind(this);
+
+      this._binsOccupied = 0;
+
+      for (var i = 0; i < this._numberOfBins; i++) {
+        var space = document.createElement("div");
+        space.id = "space";
+        space.data = 0;
+        space.addEventListener("click", this._boundOnCompartmentClick);
+        this.shadowRoot.querySelector("#bin").appendChild(space);
+      }
+    }
+  }, {
     key: "_changeColor",
     value: function _changeColor(e) {
       e.target.classList.toggle("occupied");
@@ -4412,7 +4431,7 @@ var OverHeadCompartment = function (_CustomElement2) {
         e.target.data = 0;
       }
 
-      console.log(this._binsOccupied);
+      console.log("Number of bins occupied:", this._binsOccupied);
     }
   }]);
   return OverHeadCompartment;
@@ -4432,34 +4451,6 @@ exports.default = OverHeadCompartment;
 "use strict";
 
 
-var _setPrototypeOf = __webpack_require__(/*! babel-runtime/core-js/object/set-prototype-of */ "./node_modules/babel-runtime/core-js/object/set-prototype-of.js");
-
-var _setPrototypeOf2 = _interopRequireDefault(_setPrototypeOf);
-
-var _construct = __webpack_require__(/*! babel-runtime/core-js/reflect/construct */ "./node_modules/babel-runtime/core-js/reflect/construct.js");
-
-var _construct2 = _interopRequireDefault(_construct);
-
-var _getPrototypeOf = __webpack_require__(/*! babel-runtime/core-js/object/get-prototype-of */ "./node_modules/babel-runtime/core-js/object/get-prototype-of.js");
-
-var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
-
-var _classCallCheck2 = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ "./node_modules/babel-runtime/helpers/classCallCheck.js");
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _possibleConstructorReturn2 = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ "./node_modules/babel-runtime/helpers/possibleConstructorReturn.js");
-
-var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-var _createClass2 = __webpack_require__(/*! babel-runtime/helpers/createClass */ "./node_modules/babel-runtime/helpers/createClass.js");
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
-var _inherits2 = __webpack_require__(/*! babel-runtime/helpers/inherits */ "./node_modules/babel-runtime/helpers/inherits.js");
-
-var _inherits3 = _interopRequireDefault(_inherits2);
-
 var _regenerator = __webpack_require__(/*! babel-runtime/regenerator */ "./node_modules/babel-runtime/regenerator/index.js");
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
@@ -4474,16 +4465,11 @@ var _getWeatherElement2 = _interopRequireDefault(_getWeatherElement);
 
 var _index = __webpack_require__(/*! ./airplaneGrid/index */ "./scripts/airplaneGrid/index.js");
 
+var _tabbedMenu = __webpack_require__(/*! ./tabbedMenu/tabbedMenu */ "./scripts/tabbedMenu/tabbedMenu.js");
+
+var _tabbedMenu2 = _interopRequireDefault(_tabbedMenu);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _CustomElement() {
-  return (0, _construct2.default)(HTMLElement, [], this.__proto__.constructor);
-}
-
-;
-(0, _setPrototypeOf2.default)(_CustomElement.prototype, HTMLElement.prototype);
-(0, _setPrototypeOf2.default)(_CustomElement, HTMLElement);
-
 
 /** When the DOM Content is loaded, initialize the program and load the data.*/
 document.addEventListener("DOMContentLoaded", function () {
@@ -4499,7 +4485,7 @@ document.addEventListener("DOMContentLoaded", function () {
             customElements.define('airplane-seat', _index.AirplaneSeat);
             customElements.define('airplane-grid', _index.AirplaneGrid);
             customElements.define('overhead-compartment', _index.OverHeadCompartment);
-            customElements.define('tabbed-menu', TabMenu);
+            customElements.define('tabbed-menu', _tabbedMenu2.default);
 
             // 1: Attach the menu:
             document.body.appendChild(document.createElement("tabbed-menu"));
@@ -4512,9 +4498,12 @@ document.addEventListener("DOMContentLoaded", function () {
             // 3: Build the overhead luggage compartment.
             airplaneGrid = document.createElement("airplane-grid");
 
+            airplaneGrid.setNumberOfBins(9);
+            airplaneGrid.setSeatsAndColumns(18, 2);
+
             document.querySelector("tabbed-menu").attachItem(airplaneGrid);
 
-          case 11:
+          case 13:
           case 'end':
             return _context.stop();
         }
@@ -4526,89 +4515,6 @@ document.addEventListener("DOMContentLoaded", function () {
     return _ref.apply(this, arguments);
   };
 }());
-
-/**
-  Holds the menu, and it's extendable. Aka. I can add tabs to it using an API.
-  When I click a tab, the corresponding div becomes active, and the tab
-  becomes highlighted, while the other one goes out.
-
-*/
-
-var TabMenu = function (_CustomElement2) {
-  (0, _inherits3.default)(TabMenu, _CustomElement2);
-  (0, _createClass3.default)(TabMenu, [{
-    key: 'createShadowRoot',
-    value: function createShadowRoot() {
-      this.attachShadow({ mode: "open" });
-      return this.shadowRoot;
-    }
-  }]);
-
-  function TabMenu() {
-    (0, _classCallCheck3.default)(this, TabMenu);
-    return (0, _possibleConstructorReturn3.default)(this, (TabMenu.__proto__ || (0, _getPrototypeOf2.default)(TabMenu)).call(this));
-  }
-
-  (0, _createClass3.default)(TabMenu, [{
-    key: 'connectedCallback',
-    value: function connectedCallback() {
-      this._root = this.createShadowRoot();
-      this._root.innerHTML = '\n      <style>\n        .menu * {\n          display: inline;\n          border: 1px solid black;\n          border-bottom: 0;\n        }\n\n        .hidden {\n          display: none !important;\n        }\n      </style>\n      <div class="menu">\n      </div>\n      <div class="menu-drop-down">\n      </div>\n    ';
-
-      this._menu = this.shadowRoot.querySelector(".menu");
-      this._dropDown = this.shadowRoot.querySelector(".menu-drop-down");
-    }
-
-    /** Attache a panel to the menu, do some linkage between panel and tabs */
-
-  }, {
-    key: 'attachItem',
-    value: function attachItem(node) {
-      var button = document.createElement("button");
-      button.textContent = node.localName;
-      button.classList.add(node.localName);
-
-      var boundMakeSwap = this._makeSwap.bind(this);
-      button.addEventListener("click", boundMakeSwap);
-
-      this._menu.appendChild(button);
-
-      node.classList.add("hidden");
-      this._dropDown.appendChild(node);
-    }
-
-    /** Activate one and deactivate the other */
-
-  }, {
-    key: '_makeSwap',
-    value: function _makeSwap(e) {
-      console.log(this, e);
-      this._deactivateCurrent(e.path[0]);
-      this._activateClicked(e.path[0]);
-    }
-  }, {
-    key: '_activateClicked',
-    value: function _activateClicked(target) {
-      this._dropDown.querySelector(target.classList[0]).classList.toggle("hidden");
-    }
-  }, {
-    key: '_deactivateCurrent',
-    value: function _deactivateCurrent(target) {
-
-      var i = 1;
-      var nodes = this._dropDown.childNodes;
-
-      while (i < nodes.length) {
-        if (!nodes[i].classList.contains("hidden")) {
-          nodes[i].classList.toggle("hidden");
-          break;
-        }
-        i++;
-      }
-    }
-  }]);
-  return TabMenu;
-}(_CustomElement);
 
 /***/ }),
 
@@ -4758,6 +4664,144 @@ var GetAirportWeather = function (_CustomElement2) {
 }(_CustomElement);
 
 exports.default = GetAirportWeather;
+
+/***/ }),
+
+/***/ "./scripts/tabbedMenu/tabbedMenu.js":
+/*!******************************************!*\
+  !*** ./scripts/tabbedMenu/tabbedMenu.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _setPrototypeOf = __webpack_require__(/*! babel-runtime/core-js/object/set-prototype-of */ "./node_modules/babel-runtime/core-js/object/set-prototype-of.js");
+
+var _setPrototypeOf2 = _interopRequireDefault(_setPrototypeOf);
+
+var _construct = __webpack_require__(/*! babel-runtime/core-js/reflect/construct */ "./node_modules/babel-runtime/core-js/reflect/construct.js");
+
+var _construct2 = _interopRequireDefault(_construct);
+
+var _getPrototypeOf = __webpack_require__(/*! babel-runtime/core-js/object/get-prototype-of */ "./node_modules/babel-runtime/core-js/object/get-prototype-of.js");
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ "./node_modules/babel-runtime/helpers/classCallCheck.js");
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _possibleConstructorReturn2 = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ "./node_modules/babel-runtime/helpers/possibleConstructorReturn.js");
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _createClass2 = __webpack_require__(/*! babel-runtime/helpers/createClass */ "./node_modules/babel-runtime/helpers/createClass.js");
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _inherits2 = __webpack_require__(/*! babel-runtime/helpers/inherits */ "./node_modules/babel-runtime/helpers/inherits.js");
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _CustomElement() {
+  return (0, _construct2.default)(HTMLElement, [], this.__proto__.constructor);
+}
+
+;
+(0, _setPrototypeOf2.default)(_CustomElement.prototype, HTMLElement.prototype);
+(0, _setPrototypeOf2.default)(_CustomElement, HTMLElement);
+
+/**
+  Holds the menu, and it's extendable. Aka. I can add tabs to it using an API.
+  When I click a tab, the corresponding div becomes active, and the tab
+  becomes highlighted, while the other one goes out.
+
+*/
+var TabbedMenu = function (_CustomElement2) {
+  (0, _inherits3.default)(TabbedMenu, _CustomElement2);
+  (0, _createClass3.default)(TabbedMenu, [{
+    key: "createShadowRoot",
+    value: function createShadowRoot() {
+      this.attachShadow({ mode: "open" });
+      return this.shadowRoot;
+    }
+  }]);
+
+  function TabbedMenu() {
+    (0, _classCallCheck3.default)(this, TabbedMenu);
+    return (0, _possibleConstructorReturn3.default)(this, (TabbedMenu.__proto__ || (0, _getPrototypeOf2.default)(TabbedMenu)).call(this));
+  }
+
+  (0, _createClass3.default)(TabbedMenu, [{
+    key: "connectedCallback",
+    value: function connectedCallback() {
+      this._root = this.createShadowRoot();
+      this._root.innerHTML = "\n      <style>\n        .menu * {\n          display: inline;\n          border: 1px solid black;\n          border-bottom: 0;\n        }\n\n        .hidden {\n          display: none !important;\n        }\n      </style>\n      <div class=\"menu\">\n      </div>\n      <div class=\"menu-drop-down\">\n      </div>\n    ";
+
+      this._menu = this.shadowRoot.querySelector(".menu");
+      this._dropDown = this.shadowRoot.querySelector(".menu-drop-down");
+    }
+
+    /** Attache a panel to the menu, do some linkage between panel and tabs */
+
+  }, {
+    key: "attachItem",
+    value: function attachItem(node) {
+      var button = document.createElement("button");
+      button.textContent = node.localName;
+      button.classList.add(node.localName);
+
+      var boundMakeSwap = this._makeSwap.bind(this);
+      button.addEventListener("click", boundMakeSwap);
+
+      this._menu.appendChild(button);
+
+      node.classList.add("hidden");
+      this._dropDown.appendChild(node);
+    }
+
+    /** Activate one and deactivate the other */
+
+  }, {
+    key: "_makeSwap",
+    value: function _makeSwap(e) {
+      console.log(this, e);
+      this._deactivateCurrent(e.path[0]);
+      this._activateClicked(e.path[0]);
+    }
+  }, {
+    key: "_activateClicked",
+    value: function _activateClicked(target) {
+      this._dropDown.querySelector(target.classList[0]).classList.toggle("hidden");
+    }
+  }, {
+    key: "_deactivateCurrent",
+    value: function _deactivateCurrent(target) {
+
+      var i = 1;
+      var nodes = this._dropDown.childNodes;
+
+      while (i < nodes.length) {
+        if (!nodes[i].classList.contains("hidden")) {
+          nodes[i].classList.toggle("hidden");
+          break;
+        }
+        i++;
+      }
+    }
+  }]);
+  return TabbedMenu;
+}(_CustomElement);
+
+exports.default = TabbedMenu;
 
 /***/ })
 

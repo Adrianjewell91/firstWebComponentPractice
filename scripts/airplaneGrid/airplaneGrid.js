@@ -15,7 +15,18 @@ class AirplaneGrid extends HTMLElement {
           like overhead compartments.
         Doing all of this using custom elements.
     */
-    
+
+  setNumberOfBins(val) {
+    /** Eventually add @this._numberOfBins and @this._spacesPerBin */
+    this._numberOfBins = val;
+  }
+
+  setSeatsAndColumns(seats,col) {
+    this._numberOfSeats = seats;
+    this._numberOfColumns = col;
+    this._numberOfRows = Math.ceil(this._numberOfSeats / this._numberOfColumns);
+  }
+
   constructor() {
     super();
 
@@ -75,15 +86,8 @@ class AirplaneGrid extends HTMLElement {
     this._totalOccupiedAccessor = [this._totalLeftOccupied,
                                    this._totalRightOccupied];
 
-    /** This is the algorithm for populating the airplane with seats */
-    this._numberOfSeats = 17;
-    this._numberOfColumns = 2;
-    this._numberOfRows = Math.ceil(this._numberOfSeats / this._numberOfColumns);
-
-    /** Eventually add @this._numberOfBins and @this._spacesPerBin */
-    this._numberOfBins = 5;
-
     /** Build the plane and bins */
+    this.setSeatsAndColumns(18, 2);
     this._buildPlane();
     this._buildOverHeadBins('left-overhead');
     this._buildOverHeadBins('right-overhead');
@@ -133,6 +137,8 @@ class AirplaneGrid extends HTMLElement {
   _buildOverHeadBins(val) {
     let overheadBin = document.createElement("overhead-compartment");
     overheadBin.id = val;
+    overheadBin.numberOfBins = this._numberOfBins;
+    debugger;
     this.shadowRoot.querySelector('#plane').appendChild(overheadBin);
   }
 
@@ -166,6 +172,7 @@ class AirplaneGrid extends HTMLElement {
     /** Do it first in order to compare the current totalRightOccupied with the data;
     */
     let testVal = undefined;
+
     //Determine the side of
     let sideOfPlane = 'left';
     let totalOccupiedAccessor = [this._totalLeftOccupied,
@@ -193,7 +200,7 @@ class AirplaneGrid extends HTMLElement {
     this._changeOverHeadBin(e, sideOfPlane, testVal);
 
     function increment() {
-      //In this function, metaprogram the lines immediately below.
+      //TODO: In this function, metaprogram the lines immediately below.
     }
 
     if (testVal === undefined) {
@@ -209,6 +216,7 @@ class AirplaneGrid extends HTMLElement {
     console.log("total right occupied:", this._totalRightOccupied);
     console.log("total left occupied:", this._totalLeftOccupied);
   }
+
 }
 
 export default AirplaneGrid;
