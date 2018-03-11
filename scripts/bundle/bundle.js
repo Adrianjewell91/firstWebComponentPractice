@@ -4061,7 +4061,6 @@ var AirplaneGrid = function (_CustomElement2) {
       this._totalOccupiedAccessor = [this._totalLeftOccupied, this._totalRightOccupied];
 
       /** Build the plane and bins */
-      this.setSeatsAndColumns(18, 2);
       this._buildPlane();
       this._buildOverHeadBins('left-overhead');
       this._buildOverHeadBins('right-overhead');
@@ -4099,7 +4098,8 @@ var AirplaneGrid = function (_CustomElement2) {
           l++;
 
           /** Handles odd numbers right here. */
-          if (l === this._numberOfSeats) {
+          debugger;
+          if (l === parseInt(this._numberOfSeats)) {
             break;
           }
         }
@@ -4118,7 +4118,7 @@ var AirplaneGrid = function (_CustomElement2) {
       var overheadBin = document.createElement("overhead-compartment");
       overheadBin.id = val;
       overheadBin.numberOfBins = this._numberOfBins;
-      debugger;
+
       this.shadowRoot.querySelector('#plane').appendChild(overheadBin);
     }
 
@@ -4441,6 +4441,116 @@ exports.default = OverHeadCompartment;
 
 /***/ }),
 
+/***/ "./scripts/buildAirplaneForm/buildAirplaneForm.js":
+/*!********************************************************!*\
+  !*** ./scripts/buildAirplaneForm/buildAirplaneForm.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.AirplaneForm = undefined;
+
+var _setPrototypeOf = __webpack_require__(/*! babel-runtime/core-js/object/set-prototype-of */ "./node_modules/babel-runtime/core-js/object/set-prototype-of.js");
+
+var _setPrototypeOf2 = _interopRequireDefault(_setPrototypeOf);
+
+var _construct = __webpack_require__(/*! babel-runtime/core-js/reflect/construct */ "./node_modules/babel-runtime/core-js/reflect/construct.js");
+
+var _construct2 = _interopRequireDefault(_construct);
+
+var _getPrototypeOf = __webpack_require__(/*! babel-runtime/core-js/object/get-prototype-of */ "./node_modules/babel-runtime/core-js/object/get-prototype-of.js");
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ "./node_modules/babel-runtime/helpers/classCallCheck.js");
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _possibleConstructorReturn2 = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ "./node_modules/babel-runtime/helpers/possibleConstructorReturn.js");
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _createClass2 = __webpack_require__(/*! babel-runtime/helpers/createClass */ "./node_modules/babel-runtime/helpers/createClass.js");
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _inherits2 = __webpack_require__(/*! babel-runtime/helpers/inherits */ "./node_modules/babel-runtime/helpers/inherits.js");
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _CustomElement() {
+  return (0, _construct2.default)(HTMLElement, [], this.__proto__.constructor);
+}
+
+;
+(0, _setPrototypeOf2.default)(_CustomElement.prototype, HTMLElement.prototype);
+(0, _setPrototypeOf2.default)(_CustomElement, HTMLElement);
+
+var AirplaneForm = exports.AirplaneForm = function (_CustomElement2) {
+  (0, _inherits3.default)(AirplaneForm, _CustomElement2);
+  (0, _createClass3.default)(AirplaneForm, [{
+    key: "createRoot",
+    value: function createRoot() {
+      this.attachShadow({ mode: "open" });
+    }
+  }]);
+
+  function AirplaneForm() {
+    (0, _classCallCheck3.default)(this, AirplaneForm);
+    return (0, _possibleConstructorReturn3.default)(this, (AirplaneForm.__proto__ || (0, _getPrototypeOf2.default)(AirplaneForm)).call(this));
+  }
+
+  (0, _createClass3.default)(AirplaneForm, [{
+    key: "connectedCallback",
+    value: function connectedCallback() {
+      this.createRoot();
+      this.shadowRoot.innerHTML = "\n    <style>\n      /* Style the buttons that are used to open and close the accordion panel */\n      .form-button {\n          background-color: #eee;\n          color: #444;\n          cursor: pointer;\n          padding: 18px;\n          width: 100%;\n          text-align: left;\n          border: none;\n          outline: none;\n          transition: 0.4s;\n      }\n\n      /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */\n      .active, .form-button:hover {\n          background-color: #ccc;\n      }\n\n      /* Style the accordion panel. Note: hidden by default */\n      .panel {\n          padding: 0 18px;\n          background-color: white;\n          display: block;\n          overflow: hidden;\n      }\n\n      .hidden {\n        display: none !important;\n      }\n    </style>\n    <form class=\"build-plane-form\" action=\"index.html\" method=\"post\">\n\n      <button class=\"form-button\" type=\"button\" name=\"button\">Header-Info</button>\n\n      <fieldset class=\"header-info panel hidden\">\n        <label for=\"model\"> Model:\n          <input type=\"text\" name=\"model\" value=\"\" placeholder=\"Model\">\n        </label>\n        <label for=\"model\"> Flight Number:\n          <input type=\"text\" name=\"model\" value=\"\" placeholder=\"Flight #\">\n        </label>\n        <label for=\"model\"> Model:\n          <input type=\"text\" name=\"model\" value=\"\" placeholder=\"Model\">\n        </label>\n      </fieldset>\n\n      <button class=\"form-button\" type=\"button\" name=\"button\">Config</button>\n      <fieldset class=\"config panel hidden\">\n        <label for=\"seats\"> Seats:\n          <input class=\"seats\" type=\"text\" name=\"seats\" value=\"\" placeholder=\"Seats\">\n        </label>\n\n        <label for=\"columns\"> Columns:\n          <input class=\"columns\" type=\"text\" name=\"columns\" value=\"\" placeholder=\"Columns\">\n        </label>\n\n        <label for=\"bins\"> Bins:\n          <input class=\"bins\" type=\"text\" name=\"bins\" value=\"\" placeholder=\"Bins\">\n        </label>\n      </fieldset>\n\n      <input class=\"submit-form\" type=\"submit\" name=\"\" value=\"Submit\">\n\n    </form>\n    ";
+
+      this._attachDropDownListeners();
+      this.shadowRoot.querySelector(".submit-form").addEventListener("click", function (e) {
+        e.preventDefault();
+
+        var grid = document.createElement("airplane-grid");
+
+        grid.setNumberOfBins(this.shadowRoot.querySelector('.bins').value);
+        grid.setSeatsAndColumns(this.shadowRoot.querySelector('.seats').value, this.shadowRoot.querySelector('.columns').value);
+
+        document.querySelector('tabbed-menu').attachItem(grid);
+      }.bind(this));
+    }
+  }, {
+    key: "_attachDropDownListeners",
+    value: function _attachDropDownListeners() {
+      var acc = this.shadowRoot.querySelectorAll(".form-button");
+      var i;
+
+      for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
+          /* Toggle between adding and removing the "active" class,
+          to highlight the button that controls the panel */
+          this.classList.toggle("active");
+
+          /* Toggle between hiding and showing the active panel */
+          // debugger;
+          var panel = this.nextElementSibling;
+          panel.classList.toggle("hidden");
+        });
+      }
+    }
+  }]);
+  return AirplaneForm;
+}(_CustomElement);
+
+/***/ }),
+
 /***/ "./scripts/entry.js":
 /*!**************************!*\
   !*** ./scripts/entry.js ***!
@@ -4469,12 +4579,14 @@ var _tabbedMenu = __webpack_require__(/*! ./tabbedMenu/tabbedMenu */ "./scripts/
 
 var _tabbedMenu2 = _interopRequireDefault(_tabbedMenu);
 
+var _buildAirplaneForm = __webpack_require__(/*! ./buildAirplaneForm/buildAirplaneForm */ "./scripts/buildAirplaneForm/buildAirplaneForm.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /** When the DOM Content is loaded, initialize the program and load the data.*/
 document.addEventListener("DOMContentLoaded", function () {
   var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(e) {
-    var getAirportWeather, airplaneGrid;
+    var getAirportWeather, airplaneForm;
     return _regenerator2.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -4486,6 +4598,7 @@ document.addEventListener("DOMContentLoaded", function () {
             customElements.define('airplane-grid', _index.AirplaneGrid);
             customElements.define('overhead-compartment', _index.OverHeadCompartment);
             customElements.define('tabbed-menu', _tabbedMenu2.default);
+            customElements.define('airplane-form', _buildAirplaneForm.AirplaneForm);
 
             // 1: Attach the menu:
             document.body.appendChild(document.createElement("tabbed-menu"));
@@ -4495,15 +4608,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
             document.querySelector("tabbed-menu").attachItem(getAirportWeather);
 
-            // 3: Build the overhead luggage compartment.
-            airplaneGrid = document.createElement("airplane-grid");
+            //4: A form that will eventually build the airplane:
+            airplaneForm = document.createElement("airplane-form");
 
-            airplaneGrid.setNumberOfBins(9);
-            airplaneGrid.setSeatsAndColumns(18, 2);
+            document.querySelector("tabbed-menu").attachItem(airplaneForm);
 
-            document.querySelector("tabbed-menu").attachItem(airplaneGrid);
-
-          case 13:
+          case 12:
           case 'end':
             return _context.stop();
         }

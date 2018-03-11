@@ -87,7 +87,6 @@ class AirplaneGrid extends HTMLElement {
                                    this._totalRightOccupied];
 
     /** Build the plane and bins */
-    this.setSeatsAndColumns(18, 2);
     this._buildPlane();
     this._buildOverHeadBins('left-overhead');
     this._buildOverHeadBins('right-overhead');
@@ -124,7 +123,8 @@ class AirplaneGrid extends HTMLElement {
         l ++;
 
         /** Handles odd numbers right here. */
-        if (l === this._numberOfSeats) {break;}
+        debugger;
+        if (l === parseInt(this._numberOfSeats)) { break;}
       }
 
       j ++;
@@ -138,7 +138,7 @@ class AirplaneGrid extends HTMLElement {
     let overheadBin = document.createElement("overhead-compartment");
     overheadBin.id = val;
     overheadBin.numberOfBins = this._numberOfBins;
-    debugger;
+
     this.shadowRoot.querySelector('#plane').appendChild(overheadBin);
   }
 
