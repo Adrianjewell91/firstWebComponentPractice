@@ -7,20 +7,18 @@ module.exports = {
     path: path.resolve(__dirname, 'scripts','bundle'),
     filename: 'bundle.js'
   },
-  // module: {
-  //   loaders: [
-  //     {
-  //       exclude: /(node_modules)/,
-  //       loader: 'babel-loader',
-  //       query: {
-  //         plugins: ['transform-runtime'],
-  //         presets: ['env']
-  //       }
-  //     }
-  //   ]
-  // },
-  watch: true,
+  mode: "development",
+  module: {
+    rules: [
+      {
+        exclude: /(node_modules)/,
+        use: 'babel-loader',
+      }
+    ]
+  },
   devtool: 'source-maps'
+  //devServer: {
+  //   port: 8000,
+  //   hot: true
+  // }
 }
-
-//Research how to transpile custom elements into previous work. 
