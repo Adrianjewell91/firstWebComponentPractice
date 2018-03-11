@@ -1,6 +1,21 @@
 /** Airplane Grid - airplane seats are inserted into airplane Grids */
 
 class AirplaneGrid extends HTMLElement {
+  // What needs to happen here:
+
+  /** User puts in a number of rows and columns,
+      Airplane seats and luggage overheads are generated.
+      Clicking on a seat causes a space in the overhead to be filled.
+      Clicking on any seat will fill the overheads in constant order.
+
+      A few steps:
+        Building the generation algorithm.
+        Building the linkage between seats and overhead.
+        Styling it to make the seats look like seats and the overhead look
+          like overhead compartments.
+        Doing all of this using custom elements.
+    */
+    
   constructor() {
     super();
 
@@ -22,7 +37,6 @@ class AirplaneGrid extends HTMLElement {
        }
 
        #left-overhead {
-
          grid-column: 1/2;
          grid-row: 1/2;
        }
@@ -53,6 +67,9 @@ class AirplaneGrid extends HTMLElement {
       </div>
     `;
 
+  }
+
+  connectedCallback() {
     this._totalLeftOccupied = 0;
     this._totalRightOccupied = 0;
     this._totalOccupiedAccessor = [this._totalLeftOccupied,
@@ -70,8 +87,6 @@ class AirplaneGrid extends HTMLElement {
     this._buildPlane();
     this._buildOverHeadBins('left-overhead');
     this._buildOverHeadBins('right-overhead');
-
-
   }
 
   _buildPlane() {

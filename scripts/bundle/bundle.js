@@ -69,24 +69,20 @@
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getWeatherElement__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__airplaneSeat__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__airplaneGrid__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__overHeadCompartment__ = __webpack_require__(4);
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getWeather_getWeatherElement__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__airplaneGrid_index__ = __webpack_require__(8);
 
 
 
 
 /** When the DOM Content is loaded, initialize the program and load the data.*/
 document.addEventListener("DOMContentLoaded", async function(e) {
-
   // 1:
   console.log(e);
-  customElements.define('airport-weather', __WEBPACK_IMPORTED_MODULE_0__getWeatherElement__["a" /* default */]);
-  customElements.define('airplane-seat', __WEBPACK_IMPORTED_MODULE_1__airplaneSeat__["a" /* default */]);
-  customElements.define('airplane-grid', __WEBPACK_IMPORTED_MODULE_2__airplaneGrid__["a" /* default */]);
-  customElements.define('overhead-compartment', __WEBPACK_IMPORTED_MODULE_3__overHeadCompartment__["a" /* default */]);
+  customElements.define('airport-weather', __WEBPACK_IMPORTED_MODULE_0__getWeather_getWeatherElement__["a" /* default */]);
+  customElements.define('airplane-seat', __WEBPACK_IMPORTED_MODULE_1__airplaneGrid_index__["b" /* AirplaneSeat */]);
+  customElements.define('airplane-grid', __WEBPACK_IMPORTED_MODULE_1__airplaneGrid_index__["a" /* AirplaneGrid */]);
+  customElements.define('overhead-compartment', __WEBPACK_IMPORTED_MODULE_1__airplaneGrid_index__["c" /* OverHeadCompartment */]);
 
   // 2: Build the getWeather API
   let getAirportWeather = document.createElement('airport-weather');
@@ -95,27 +91,15 @@ document.addEventListener("DOMContentLoaded", async function(e) {
   // 3: Build the overhead luggage compartment.
   let airplaneGrid = document.createElement("airplane-grid");
   document.querySelector(".menu-drop-down").appendChild(airplaneGrid);
-
-  // What needs to happen here:
-
-  /** User puts in a number of rows and columns,
-      Airplane seats and luggage overheads are generated.
-      Clicking on a seat causes a space in the overhead to be filled.
-      Clicking on any seat will fill the overheads in constant order.
-
-      A few steps:
-        Building the generation algorithm.
-        Building the linkage between seats and overhead.
-        Styling it to make the seats look like seats and the overhead look
-          like overhead compartments.
-        Doing all of this using custom elements.
-    */
-
 });
 
 
 /***/ }),
-/* 1 */
+/* 1 */,
+/* 2 */,
+/* 3 */,
+/* 4 */,
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -205,7 +189,7 @@ class GetAirportWeather extends HTMLElement {
 
 
 /***/ }),
-/* 2 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -256,13 +240,28 @@ class AirplaneSeat extends HTMLElement {
 
 
 /***/ }),
-/* 3 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /** Airplane Grid - airplane seats are inserted into airplane Grids */
 
 class AirplaneGrid extends HTMLElement {
+  // What needs to happen here:
+
+  /** User puts in a number of rows and columns,
+      Airplane seats and luggage overheads are generated.
+      Clicking on a seat causes a space in the overhead to be filled.
+      Clicking on any seat will fill the overheads in constant order.
+
+      A few steps:
+        Building the generation algorithm.
+        Building the linkage between seats and overhead.
+        Styling it to make the seats look like seats and the overhead look
+          like overhead compartments.
+        Doing all of this using custom elements.
+    */
+    
   constructor() {
     super();
 
@@ -284,7 +283,6 @@ class AirplaneGrid extends HTMLElement {
        }
 
        #left-overhead {
-
          grid-column: 1/2;
          grid-row: 1/2;
        }
@@ -315,6 +313,9 @@ class AirplaneGrid extends HTMLElement {
       </div>
     `;
 
+  }
+
+  connectedCallback() {
     this._totalLeftOccupied = 0;
     this._totalRightOccupied = 0;
     this._totalOccupiedAccessor = [this._totalLeftOccupied,
@@ -332,8 +333,6 @@ class AirplaneGrid extends HTMLElement {
     this._buildPlane();
     this._buildOverHeadBins('left-overhead');
     this._buildOverHeadBins('right-overhead');
-
-
   }
 
   _buildPlane() {
@@ -462,7 +461,26 @@ class AirplaneGrid extends HTMLElement {
 
 
 /***/ }),
-/* 4 */
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__airplaneSeat__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__airplaneGrid__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__overHeadCompartment__ = __webpack_require__(10);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__airplaneSeat__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_1__airplaneGrid__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_2__overHeadCompartment__["a"]; });
+
+
+
+
+
+
+
+/***/ }),
+/* 9 */,
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
