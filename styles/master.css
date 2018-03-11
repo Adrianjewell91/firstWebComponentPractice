@@ -49,9 +49,4 @@ body {
   align-items: normal;
   background: ghostwhite; }
 
-.menu * {
-  display: inline;
-  border: 1px solid black;
-  border-bottom: 0; }
-
 /*# sourceMappingURL=master.css.map */
