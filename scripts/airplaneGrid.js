@@ -57,7 +57,7 @@ class AirplaneGrid extends HTMLElement {
 
     /** This is the algorithm for populating the airplane with seats */
     this._numberOfSeats = 17;
-    this._numberOfColumns = 3;
+    this._numberOfColumns = 2;
     this._numberOfRows = Math.ceil(this._numberOfSeats / this._numberOfColumns);
 
     /** Eventually add @this._numberOfBins and @this._spacesPerBin */

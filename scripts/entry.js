@@ -15,13 +15,11 @@ document.addEventListener("DOMContentLoaded", async function(e) {
 
   // 2: Build the getWeather API
   let getAirportWeather = document.createElement('airport-weather');
-  getAirportWeather.classList.add("flex-and-column");
-  document.body.appendChild(getAirportWeather);
+  document.querySelector(".menu-drop-down").appendChild(getAirportWeather);
 
   // 3: Build the overhead luggage compartment.
-  //Insert custom elements inside of other custom elements.
   let airplaneGrid = document.createElement("airplane-grid");
-  document.body.appendChild(airplaneGrid);
+  document.querySelector(".menu-drop-down").appendChild(airplaneGrid);
 
   // What needs to happen here:
 

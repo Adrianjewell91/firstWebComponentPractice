@@ -90,13 +90,11 @@ document.addEventListener("DOMContentLoaded", async function(e) {
 
   // 2: Build the getWeather API
   let getAirportWeather = document.createElement('airport-weather');
-  getAirportWeather.classList.add("flex-and-column");
-  document.body.appendChild(getAirportWeather);
+  document.querySelector(".menu-drop-down").appendChild(getAirportWeather);
 
   // 3: Build the overhead luggage compartment.
-  //Insert custom elements inside of other custom elements.
   let airplaneGrid = document.createElement("airplane-grid");
-  document.body.appendChild(airplaneGrid);
+  document.querySelector(".menu-drop-down").appendChild(airplaneGrid);
 
   // What needs to happen here:
 
@@ -130,6 +128,19 @@ class GetAirportWeather extends HTMLElement {
     const shadowRoot = this.attachShadow({mode: "open"});
     shadowRoot.innerHTML = `
       <style>
+
+        :host {
+            align-items: normal;
+            background: blue;
+            box-shadow: 6px 6px 4px 1px rgba(0, 0, 255, .2);
+            /* color: white; */
+            margin: 4%;
+            border: 1px solid blue;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+          }
+
         * {
           margin: 4%;
         }
@@ -308,7 +319,7 @@ class AirplaneGrid extends HTMLElement {
 
     /** This is the algorithm for populating the airplane with seats */
     this._numberOfSeats = 17;
-    this._numberOfColumns = 3;
+    this._numberOfColumns = 2;
     this._numberOfRows = Math.ceil(this._numberOfSeats / this._numberOfColumns);
 
     /** Eventually add @this._numberOfBins and @this._spacesPerBin */

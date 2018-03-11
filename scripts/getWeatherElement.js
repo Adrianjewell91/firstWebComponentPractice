@@ -7,6 +7,19 @@ class GetAirportWeather extends HTMLElement {
     const shadowRoot = this.attachShadow({mode: "open"});
     shadowRoot.innerHTML = `
       <style>
+
+        :host {
+            align-items: normal;
+            background: blue;
+            box-shadow: 6px 6px 4px 1px rgba(0, 0, 255, .2);
+            /* color: white; */
+            margin: 4%;
+            border: 1px solid blue;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+          }
+
         * {
           margin: 4%;
         }
