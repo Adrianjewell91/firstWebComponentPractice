@@ -53,6 +53,10 @@ class TabMenu extends HTMLElement {
           border: 1px solid black;
           border-bottom: 0;
         }
+
+        .hidden {
+          display: none !important;
+        }
       </style>
       <div class="menu">
       </div>
@@ -64,19 +68,47 @@ class TabMenu extends HTMLElement {
     this._dropDown = this.shadowRoot.querySelector(".menu-drop-down");
   }
 
+  /** Attache a panel to the menu, do some linkage between panel and tabs */
   attachItem(node) {
-    debugger;
     const button = document.createElement("button");
     button.textContent = node.localName;
+    button.classList.add(node.localName);
+
+    const boundMakeSwap = this._makeSwap.bind(this);
+    button.addEventListener("click", boundMakeSwap);
+
     this._menu.appendChild(button);
+
+    node.classList.add("hidden");
     this._dropDown.appendChild(node);
   }
 
-  _deactivateCurrent() {
-
+  /** Activate one and deactivate the other */
+  _makeSwap(e) {
+    console.log(this, e);
+    this._deactivateCurrent(e.path[0]);
+    this._activateClicked(e.path[0]);
   }
 
-  _activateClicked() {
 
+  _activateClicked(target) {
+    this._dropDown.querySelector(target.classList[0])
+    .classList
+    .toggle("hidden");
   }
+
+  _deactivateCurrent(target) {
+    
+    let i = 1;
+    let nodes = this._dropDown.childNodes;
+
+    while (i < nodes.length) {
+      if (!nodes[i].classList.contains("hidden")) {
+        nodes[i].classList.toggle("hidden");
+        break;
+      }
+      i++;
+    }
+  }
+
 }
