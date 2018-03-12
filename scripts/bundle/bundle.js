@@ -4093,8 +4093,8 @@ var AirplaneGrid = function (_CustomElement2) {
 
           //Attach an event listener that updates the overhead bin storage.
           //TODO: Write a better algorithm for linking seats with compartments.
-          // Probably best to not have anything one, just let an IOT plug it in. 
-          // airplaneSeat.addEventListener("click", this._boundOnSeatClick);
+          // Probably best to not have anything one, just let an IOT plug it in.
+          airplaneSeat.addEventListener("click", this._boundOnSeatClick);
 
           k++;
           l++;
@@ -4131,6 +4131,7 @@ var AirplaneGrid = function (_CustomElement2) {
     value: function _changeOverHeadBin(e, sideOfPlane, testVal) {
 
       var bin = this.shadowRoot.querySelector('#' + sideOfPlane + '-overhead').shadowRoot.querySelectorAll("#space");
+      // debugger;
       var totalOccupiedAccessor = [this._totalLeftOccupied, this._totalRightOccupied];
       var selector = sideOfPlane === "left" ? 0 : 1;
 
@@ -4138,8 +4139,8 @@ var AirplaneGrid = function (_CustomElement2) {
         //Iterate through them and when you find the matching bin, click it();
         var i = 0;
         while (i < bin.length) {
-          if (bin[i].data === (testVal === 0 ? 0 : totalOccupiedAccessor[selector])) {
-            bin[i].click();
+          if (bin[bin.length - i - 1].data === (testVal === 0 ? 0 : totalOccupiedAccessor[selector])) {
+            bin[bin.length - i - 1].click();
             break;
           }
           i++;

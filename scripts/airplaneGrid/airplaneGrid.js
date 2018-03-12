@@ -118,8 +118,8 @@ class AirplaneGrid extends HTMLElement {
 
         //Attach an event listener that updates the overhead bin storage.
         //TODO: Write a better algorithm for linking seats with compartments.
-        // Probably best to not have anything one, just let an IOT plug it in. 
-        // airplaneSeat.addEventListener("click", this._boundOnSeatClick);
+        // Probably best to not have anything one, just let an IOT plug it in.
+        airplaneSeat.addEventListener("click", this._boundOnSeatClick);
 
         k ++;
         l ++;
@@ -149,6 +149,7 @@ class AirplaneGrid extends HTMLElement {
 
     let bin = this.shadowRoot.querySelector(`#${sideOfPlane}-overhead`)
                   .shadowRoot.querySelectorAll("#space");
+                  // debugger;
     let totalOccupiedAccessor = [this._totalLeftOccupied,
                                  this._totalRightOccupied];
     let selector = sideOfPlane === "left" ? 0 : 1;
@@ -158,9 +159,9 @@ class AirplaneGrid extends HTMLElement {
       //Iterate through them and when you find the matching bin, click it();
       let i = 0;
       while (i < bin.length) {
-        if (bin[i].data === (testVal === 0 ?
+        if (bin[bin.length-i-1].data === (testVal === 0 ?
                                          0 : totalOccupiedAccessor[selector])) {
-          bin[i].click();
+          bin[bin.length-i-1].click();
           break;
         }
         i++;
