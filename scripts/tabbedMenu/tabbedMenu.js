@@ -19,9 +19,14 @@ class TabbedMenu extends HTMLElement {
     this._root.innerHTML = `
       <style>
         .menu * {
-          display: inline;
           border: 1px solid black;
           border-bottom: 0;
+          margin: 1%;
+        }
+
+        .menu {
+          display: flex;
+          justify-content: left;
         }
 
         .hidden {

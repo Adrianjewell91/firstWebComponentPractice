@@ -4856,7 +4856,7 @@ var TabbedMenu = function (_CustomElement2) {
     key: "connectedCallback",
     value: function connectedCallback() {
       this._root = this.createShadowRoot();
-      this._root.innerHTML = "\n      <style>\n        .menu * {\n          display: inline;\n          border: 1px solid black;\n          border-bottom: 0;\n        }\n\n        .hidden {\n          display: none !important;\n        }\n      </style>\n      <div class=\"menu\">\n      </div>\n      <div class=\"menu-drop-down\">\n      </div>\n    ";
+      this._root.innerHTML = "\n      <style>\n        .menu * {\n          border: 1px solid black;\n          border-bottom: 0;\n          margin: 1%;\n        }\n\n        .menu {\n          display: flex;\n          justify-content: left;\n        }\n\n        .hidden {\n          display: none !important;\n        }\n      </style>\n      <div class=\"menu\">\n      </div>\n      <div class=\"menu-drop-down\">\n      </div>\n    ";
 
       this._menu = this.shadowRoot.querySelector(".menu");
       this._dropDown = this.shadowRoot.querySelector(".menu-drop-down");
