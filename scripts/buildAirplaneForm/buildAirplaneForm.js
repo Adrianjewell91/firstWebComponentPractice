@@ -12,7 +12,7 @@ export class AirplaneForm extends HTMLElement {
     this.shadowRoot.innerHTML = `
     <style>
       /* Style the buttons that are used to open and close the accordion panel */
-      .form-button {
+      .form-button, .panel div{
           background-color: #eee;
           color: #444;
           cursor: pointer;
@@ -29,12 +29,20 @@ export class AirplaneForm extends HTMLElement {
           background-color: #ccc;
       }
 
-      /* Style the accordion panel. Note: hidden by default */
       .panel {
+        border: none;
+      }
+      /* Style the accordion panel. Note: hidden by default */
+      .panel div {
           padding: 0 18px;
           background-color: white;
-          display: block;
+          display: grid;
+          grid-template-columns: 1fr;
+          grid-template-rows: 1fr 1fr 1fr;
           overflow: hidden;
+          margin-top: 1%;
+          margin-bottom: 1%;
+          background:none;
       }
 
       .hidden {
@@ -46,30 +54,34 @@ export class AirplaneForm extends HTMLElement {
       <button class="form-button" type="button" name="button">Header-Info</button>
 
       <fieldset class="header-info panel hidden">
-        <label for="model"> Model:
-          <input type="text" name="model" value="" placeholder="Model">
-        </label>
-        <label for="model"> Flight Number:
-          <input type="text" name="model" value="" placeholder="Flight #">
-        </label>
-        <label for="model"> Model:
-          <input type="text" name="model" value="" placeholder="Model">
-        </label>
+        <div>
+          <label for="model"> Model:
+            <input type="text" name="model" value="" placeholder="Model">
+          </label>
+          <label for="model"> Flight Number:
+            <input type="text" name="model" value="" placeholder="Flight #">
+          </label>
+          <label for="model"> Model:
+            <input type="text" name="model" value="" placeholder="Model">
+          </label>
+        </div>
       </fieldset>
 
       <button class="form-button" type="button" name="button">Config</button>
       <fieldset class="config panel hidden">
-        <label for="seats"> Seats:
-          <input class="seats" type="text" name="seats" value="" placeholder="Seats">
-        </label>
+        <div>
+          <label for="seats"> Seats:
+            <input class="seats" type="text" name="seats" value="" placeholder="Seats">
+          </label>
 
-        <label for="columns"> Columns:
-          <input class="columns" type="text" name="columns" value="" placeholder="Columns">
-        </label>
+          <label for="columns"> Columns:
+            <input class="columns" type="text" name="columns" value="" placeholder="Columns">
+          </label>
 
-        <label for="bins"> Bins:
-          <input class="bins" type="text" name="bins" value="" placeholder="Bins">
-        </label>
+          <label for="bins"> Bins:
+            <input class="bins" type="text" name="bins" value="" placeholder="Bins">
+          </label>
+        </div>
       </fieldset>
 
       <input class="submit-form" type="submit" name="" value="Submit">
@@ -81,7 +93,7 @@ export class AirplaneForm extends HTMLElement {
     this.shadowRoot.querySelector(".submit-form").addEventListener("click",
       function(e) {
         e.preventDefault();
-        
+
         const grid = document.createElement("airplane-grid");
 
         grid.setNumberOfBins(this.shadowRoot.querySelector('.bins').value);

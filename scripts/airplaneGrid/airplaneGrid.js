@@ -117,13 +117,15 @@ class AirplaneGrid extends HTMLElement {
         this.shadowRoot.querySelector(`#row-${j}`).appendChild(airplaneSeat);
 
         //Attach an event listener that updates the overhead bin storage.
-        airplaneSeat.addEventListener("click", this._boundOnSeatClick);
+        //TODO: Write a better algorithm for linking seats with compartments.
+        // Probably best to not have anything one, just let an IOT plug it in. 
+        // airplaneSeat.addEventListener("click", this._boundOnSeatClick);
 
         k ++;
         l ++;
 
         /** Handles odd numbers right here. */
-        debugger;
+
         if (l === parseInt(this._numberOfSeats)) { break;}
       }
 
